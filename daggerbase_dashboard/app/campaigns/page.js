@@ -1,5 +1,6 @@
 import { fetchCampaigns } from "@/lib/api";
 import Card from "@/components/card";
+import Link from "next/link";
 
 export default async function Campaigns() {
     const campaigns = await fetchCampaigns();
@@ -8,13 +9,13 @@ export default async function Campaigns() {
         <div className="h-screen w-full flex">
             <div className="bg-gray-700 w-[25%] h-full flex flex-col items-center justify-center gap-1">
                 <div className="w-full bg-purple-600 py-2 px-4">
-                    <button>All Sessions</button>
+                    <Link href="/">All Sessions</Link>
                 </div>
                 <div className="w-full bg-gray-900 py-2 px-4">
-                    <button>Campaigns</button>
+                    <Link href="/campaigns">Campaigns</Link>
                 </div>
                 <div className="w-full bg-gray-900 py-2 px-4">
-                    <button>One-Shots</button>
+                    <Link href="/one-shots">One-Shots</Link>
                 </div>
             </div>
             <div className="bg-black w-[75%] h-full">
@@ -33,4 +34,3 @@ export default async function Campaigns() {
         </div>
     );
 }
-
