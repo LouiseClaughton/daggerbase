@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sessions_data",
+  "info": {
+    "singularName": "session-data",
+    "pluralName": "sessions-data",
+    "displayName": "Session Data"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "campaign": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::campaign.campaign"
+    },
+    "summary": {
+      "type": "text"
+    },
+    "date": {
+      "type": "date"
+    },
+    "sessionDescription": {
+      "type": "text"
+    }
+  }
+}

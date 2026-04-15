@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "one_shots",
+  "info": {
+    "singularName": "one-shot",
+    "pluralName": "one-shots",
+    "displayName": "One-Shot"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "text"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "sessions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::session-data.session-data"
+    }
+  }
+}
