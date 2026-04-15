@@ -1,9 +1,23 @@
-import { fetchOneShots } from "@/lib/api";
-import Card from "@/components/card";
 import Link from "next/link";
 
-export default async function OneShots() {
-    const oneShots = await fetchOneShots();
+async function getOneShot(slug) {
+    const res = await fetch(
+        `https://dedicated-laughter-0dc7376bd1.strapiapp.com/api/one-shots?filters[slug][$eq]=${slug}`
+    );
+
+    const data = await res.json();
+    return data.data[0];
+}
+
+export default async function OneShotPage({ params }) {
+    const resolvedParams = await params;
+    const slug = resolvedParams.slug;
+
+    const oneShot = await getOneShot(slug);
+
+    if (!oneShot) {
+        return <div>Not found</div>;
+    }
 
     return (
         <div className="h-screen w-full flex">
@@ -19,17 +33,9 @@ export default async function OneShots() {
                 </div>
             </div>
             <div className="bg-black w-[75%] h-full">
-                <div className="grid grid-cols-3 gap-4 py-6 px-8">
-                    {oneShots.map(oneShot => (
-                        <Card
-                            key={oneShot.id}
-                            title={oneShot.title}
-                            content={oneShot.summary}
-                            startDate={oneShot.startDate}
-                            endDate={oneShot.endDate}
-                            href={`/one-shots/${oneShot.slug}`}
-                        />
-                    ))}
+                <div className="gap-4 py-6 px-8 flex flex-col">
+                    <h1>{oneShot.title}</h1>
+                    <p>{oneShot.summary}</p>
                 </div>
             </div>
         </div>

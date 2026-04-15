@@ -9,7 +9,7 @@ export default async function Home() {
     <div className="h-screen w-full flex">
       <div className="bg-gray-700 w-[25%] h-full flex flex-col items-center justify-center gap-1">
         <div className="w-full bg-purple-600 py-2 px-4">
-          <Link href="/sessions">All Sessions</Link>
+          <Link href="/">All Sessions</Link>
         </div>
         <div className="w-full bg-gray-900 py-2 px-4">
           <Link href="/campaigns">Campaigns</Link>
@@ -26,7 +26,7 @@ export default async function Home() {
               title={session.title}
               content={session.summary}
               startDate={session.date}
-              campaign={session.campaign.title}
+              campaign={session.campaign?.title}
             />
           ))}
         </div>
