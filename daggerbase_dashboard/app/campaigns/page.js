@@ -4,6 +4,7 @@ import Link from "next/link";
 
 export default async function Campaigns() {
     const campaigns = await fetchCampaigns();
+    console.log(campaigns);
 
     return (
         <div className="h-screen w-full flex">
@@ -27,6 +28,7 @@ export default async function Campaigns() {
                             content={campaign.summary}
                             startDate={campaign.startDate}
                             endDate={campaign.endDate}
+                            href={`/campaigns/${campaign.slug}`}
                         />
                     ))}
                 </div>

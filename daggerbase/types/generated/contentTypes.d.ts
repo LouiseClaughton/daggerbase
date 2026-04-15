@@ -523,6 +523,7 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::session-data.session-data'
     >;
+    slug: Schema.Attribute.String;
     startDate: Schema.Attribute.Date;
     summary: Schema.Attribute.Text;
     title: Schema.Attribute.String;
@@ -590,6 +591,7 @@ export interface ApiOneShotOneShot extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::session-data.session-data'
     >;
+    slug: Schema.Attribute.String;
     startDate: Schema.Attribute.Date;
     summary: Schema.Attribute.Text;
     title: Schema.Attribute.String;
