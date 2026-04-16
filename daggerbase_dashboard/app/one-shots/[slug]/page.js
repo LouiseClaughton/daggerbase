@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CampaignSummary from "@/components/campaignSummary";
 import SessionViewer from "@/components/sessionView";
+import Sidebar from "@/components/sidebar";
 
 async function getOneShot(slug) {
     const res = await fetch(
@@ -21,20 +22,12 @@ export default async function OneShotPage({ params }) {
         return <div>Not found</div>;
     }
 
+    let formattedStartDate = new Date(oneShot.startDate).toLocaleDateString('en-GB');
+    let formattedEndDate = new Date(oneShot.endDate).toLocaleDateString('en-GB');
+
     return (
         <div className="h-screen w-full flex">
-            {/* Sidebar */}
-            <div className="bg-gray-700 w-[25%] h-full flex flex-col items-center justify-center gap-1">
-                <div className="w-full bg-gray-900 py-2 px-4">
-                    <Link href="/">All Sessions</Link>
-                </div>
-                <div className="w-full bg-gray-900 py-2 px-4">
-                    <Link href="/campaigns">Campaigns</Link>
-                </div>
-                <div className="w-full bg-purple-600 py-2 px-4">
-                    <Link href="/one-shots">One-Shots</Link>
-                </div>
-            </div>
+            <Sidebar activeTab={"one-shots"} />
 
             {/* Main Content */}
             <div className="bg-black w-[75%] h-full">
@@ -44,6 +37,13 @@ export default async function OneShotPage({ params }) {
                 <div className="py-6 px-8 flex flex-col">
                     <div className="border-b-1 border-gray-500 pb-6">
                         <h1 className="text-xl font-bold pb-4">{oneShot.title}</h1>
+                        <div className="pb-4">
+                            {oneShot.startDate ? `${formattedStartDate}` : 'TBC'} 
+                            {oneShot.startDate
+                                ? (oneShot.endDate ? `- ${formattedEndDate}` : '- Present') 
+                                : ''
+                            }
+                        </div>
                         <CampaignSummary summary={oneShot.summary} />
                     </div>
 

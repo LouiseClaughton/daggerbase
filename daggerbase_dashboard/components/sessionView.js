@@ -7,8 +7,8 @@ export default function SessionViewer({ sessions }) {
   const [activeSession, setActiveSession] = useState(sessions?.[0]); // default first
 
     return (
-        <div className="grid grid-cols-3">
-            <div className="flex flex-col border-r border-gray-500 pr-6 pt-6">
+        <div className={`${sessions?.length > 0 ? 'grid grid-cols-3 flex-1 min-h-0 overflow-hidden' : ''}`}>
+            <div className={`${sessions?.length > 0 ? 'flex flex-col border-r border-gray-500 pr-6 pt-6 overflow-y-auto custom-scrollbar' : ''}`}>
                 {sessions?.map(session => (
                     <div
                         key={session.id}
@@ -24,7 +24,7 @@ export default function SessionViewer({ sessions }) {
                 ))}
             </div>
 
-            <div className="col-span-2 p-6">
+            <div className="col-span-2 p-6 overflow-y-auto custom-scrollbar whitespace-pre-line">
                 {activeSession?.sessionDescription}
             </div>
         </div>
