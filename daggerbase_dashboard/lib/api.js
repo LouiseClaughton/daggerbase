@@ -31,7 +31,7 @@ async function fetchWithRetry(url, options = {}, retries = 3) {
 const BASE_URL = "https://dedicated-laughter-0dc7376bd1.strapiapp.com/api";
 
 export async function fetchCampaigns() {
-  const res = await fetchWithRetry(`${BASE_URL}/campaigns?populate[session_data]=*`);
+  const res = await fetchWithRetry(`${BASE_URL}/campaigns?populate=*`);
   const data = await res.json();
   return data.data;
 }

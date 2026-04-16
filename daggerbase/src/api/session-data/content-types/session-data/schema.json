@@ -28,6 +28,12 @@
     },
     "sessionDescription": {
       "type": "text"
+    },
+    "one_shot": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::one-shot.one-shot",
+      "inversedBy": "session_data"
     }
   }
 }

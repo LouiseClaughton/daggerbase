@@ -511,6 +511,7 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     endDate: Schema.Attribute.Date;
+    Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -580,6 +581,7 @@ export interface ApiOneShotOneShot extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     endDate: Schema.Attribute.Date;
+    Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -587,6 +589,10 @@ export interface ApiOneShotOneShot extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    session_data: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::session-data.session-data'
+    >;
     slug: Schema.Attribute.String;
     startDate: Schema.Attribute.Date;
     summary: Schema.Attribute.Text;
@@ -619,6 +625,7 @@ export interface ApiSessionDataSessionData extends Struct.CollectionTypeSchema {
       'api::session-data.session-data'
     > &
       Schema.Attribute.Private;
+    one_shot: Schema.Attribute.Relation<'manyToOne', 'api::one-shot.one-shot'>;
     publishedAt: Schema.Attribute.DateTime;
     sessionDescription: Schema.Attribute.Text;
     summary: Schema.Attribute.Text;

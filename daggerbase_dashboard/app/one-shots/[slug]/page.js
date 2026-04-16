@@ -1,4 +1,6 @@
 import Link from "next/link";
+import CampaignSummary from "@/components/campaignSummary";
+import SessionViewer from "@/components/sessionView";
 
 async function getOneShot(slug) {
     const res = await fetch(
@@ -21,6 +23,7 @@ export default async function OneShotPage({ params }) {
 
     return (
         <div className="h-screen w-full flex">
+            {/* Sidebar */}
             <div className="bg-gray-700 w-[25%] h-full flex flex-col items-center justify-center gap-1">
                 <div className="w-full bg-gray-900 py-2 px-4">
                     <Link href="/">All Sessions</Link>
@@ -32,10 +35,19 @@ export default async function OneShotPage({ params }) {
                     <Link href="/one-shots">One-Shots</Link>
                 </div>
             </div>
+
+            {/* Main Content */}
             <div className="bg-black w-[75%] h-full">
-                <div className="gap-4 py-6 px-8 flex flex-col">
-                    <h1>{oneShot.title}</h1>
-                    <p>{oneShot.summary}</p>
+                <div className="w-full h-[40%] bg-gray-800">
+
+                </div>
+                <div className="py-6 px-8 flex flex-col">
+                    <div className="border-b-1 border-gray-500 pb-6">
+                        <h1 className="text-xl font-bold pb-4">{oneShot.title}</h1>
+                        <CampaignSummary summary={oneShot.summary} />
+                    </div>
+
+                    <SessionViewer sessions={oneShot.session_data} />
                 </div>
             </div>
         </div>
