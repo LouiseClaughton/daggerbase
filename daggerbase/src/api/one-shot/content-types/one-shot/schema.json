@@ -25,11 +25,6 @@
     },
     "endDate": {
       "type": "date"
-    },
-    "sessions": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::session-data.session-data"
     }
   }
 }

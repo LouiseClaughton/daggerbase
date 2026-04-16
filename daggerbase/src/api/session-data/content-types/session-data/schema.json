@@ -14,11 +14,6 @@
     "title": {
       "type": "string"
     },
-    "campaign": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::campaign.campaign"
-    },
     "summary": {
       "type": "text"
     },
@@ -28,5 +23,11 @@
     "sessionDescription": {
       "type": "text"
     }
+  },
+  "campaign": {
+    "type": "relation",
+    "relation": "manyToOne",
+    "target": "api::campaign.campaign",
+    "inversedBy": "sessions"
   }
 }

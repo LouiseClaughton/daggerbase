@@ -29,10 +29,11 @@
     "endDate": {
       "type": "date"
     },
-    "sessions": {
+    "session_data": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::session-data.session-data"
+      "target": "api::session-data.session-data",
+      "mappedBy": "campaign"
     }
   }
 }

@@ -519,7 +519,7 @@ export interface ApiCampaignCampaign extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     overview: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
-    sessions: Schema.Attribute.Relation<
+    session_data: Schema.Attribute.Relation<
       'oneToMany',
       'api::session-data.session-data'
     >;
@@ -587,10 +587,6 @@ export interface ApiOneShotOneShot extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    sessions: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::session-data.session-data'
-    >;
     slug: Schema.Attribute.String;
     startDate: Schema.Attribute.Date;
     summary: Schema.Attribute.Text;
@@ -612,7 +608,6 @@ export interface ApiSessionDataSessionData extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    campaign: Schema.Attribute.Relation<'oneToOne', 'api::campaign.campaign'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
