@@ -608,6 +608,7 @@ export interface ApiSessionDataSessionData extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    campaign: Schema.Attribute.Relation<'manyToOne', 'api::campaign.campaign'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

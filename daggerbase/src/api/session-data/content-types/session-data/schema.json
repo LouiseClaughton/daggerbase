@@ -14,6 +14,12 @@
     "title": {
       "type": "string"
     },
+    "campaign": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::campaign.campaign",
+      "inversedBy": "session_data"
+    },
     "summary": {
       "type": "text"
     },
@@ -23,11 +29,5 @@
     "sessionDescription": {
       "type": "text"
     }
-  },
-  "campaign": {
-    "type": "relation",
-    "relation": "manyToOne",
-    "target": "api::campaign.campaign",
-    "inversedBy": "sessions"
   }
 }

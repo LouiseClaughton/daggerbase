@@ -1,12 +1,18 @@
 import Link from "next/link";
 
 async function getCampaign(slug) {
-    const res = await fetch(
-        `https://dedicated-laughter-0dc7376bd1.strapiapp.com/api/campaigns?filters[slug][$eq]=${slug}`
-    );
+  const res = await fetch(
+    `https://dedicated-laughter-0dc7376bd1.strapiapp.com/api/campaigns?filters[slug][$eq]=${slug}&populate=*`
+  );
 
-    const data = await res.json();
-    return data.data[0];
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("Strapi error response:", text);
+    throw new Error(`Strapi request failed: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data.data?.[0] || null;
 }
 
 export default async function CampaignPage({ params }) {
