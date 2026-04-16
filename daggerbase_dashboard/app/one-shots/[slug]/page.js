@@ -47,7 +47,7 @@ export default async function OneShotPage({ params }) {
                         <CampaignSummary summary={oneShot.summary} />
                     </div>
 
-                    <SessionViewer sessions={oneShot.session_data} />
+                    <SessionViewer sessions={oneShot.one_shot_session_data} />
                 </div>
             </div>
         </div>

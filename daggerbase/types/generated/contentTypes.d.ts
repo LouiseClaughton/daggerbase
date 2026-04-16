@@ -566,6 +566,39 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiOneShotSessionDataOneShotSessionData
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'one_shot_sessions_data';
+  info: {
+    displayName: 'One Shot Session Data';
+    pluralName: 'one-shot-sessions-data';
+    singularName: 'one-shot-session-data';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::one-shot-session-data.one-shot-session-data'
+    > &
+      Schema.Attribute.Private;
+    one_shot: Schema.Attribute.Relation<'manyToOne', 'api::one-shot.one-shot'>;
+    publishedAt: Schema.Attribute.DateTime;
+    sessionDescription: Schema.Attribute.Text;
+    summary: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiOneShotOneShot extends Struct.CollectionTypeSchema {
   collectionName: 'one_shots';
   info: {
@@ -588,11 +621,11 @@ export interface ApiOneShotOneShot extends Struct.CollectionTypeSchema {
       'api::one-shot.one-shot'
     > &
       Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    session_data: Schema.Attribute.Relation<
+    one_shot_session_data: Schema.Attribute.Relation<
       'oneToMany',
-      'api::session-data.session-data'
+      'api::one-shot-session-data.one-shot-session-data'
     >;
+    publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String;
     startDate: Schema.Attribute.Date;
     summary: Schema.Attribute.Text;
@@ -606,7 +639,7 @@ export interface ApiOneShotOneShot extends Struct.CollectionTypeSchema {
 export interface ApiSessionDataSessionData extends Struct.CollectionTypeSchema {
   collectionName: 'sessions_data';
   info: {
-    displayName: 'Session Data';
+    displayName: 'Campaign Session Data';
     pluralName: 'sessions-data';
     singularName: 'session-data';
   };
@@ -625,7 +658,6 @@ export interface ApiSessionDataSessionData extends Struct.CollectionTypeSchema {
       'api::session-data.session-data'
     > &
       Schema.Attribute.Private;
-    one_shot: Schema.Attribute.Relation<'manyToOne', 'api::one-shot.one-shot'>;
     publishedAt: Schema.Attribute.DateTime;
     sessionDescription: Schema.Attribute.Text;
     summary: Schema.Attribute.Text;
@@ -1151,6 +1183,7 @@ declare module '@strapi/strapi' {
       'api::about.about': ApiAboutAbout;
       'api::campaign.campaign': ApiCampaignCampaign;
       'api::global.global': ApiGlobalGlobal;
+      'api::one-shot-session-data.one-shot-session-data': ApiOneShotSessionDataOneShotSessionData;
       'api::one-shot.one-shot': ApiOneShotOneShot;
       'api::session-data.session-data': ApiSessionDataSessionData;
       'plugin::content-releases.release': PluginContentReleasesRelease;

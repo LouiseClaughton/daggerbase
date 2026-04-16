@@ -36,10 +36,10 @@
     "endDate": {
       "type": "date"
     },
-    "session_data": {
+    "one_shot_session_data": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::session-data.session-data",
+      "target": "api::one-shot-session-data.one-shot-session-data",
       "mappedBy": "one_shot"
     }
   }

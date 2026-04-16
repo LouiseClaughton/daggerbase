@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "sessions_data",
+  "collectionName": "one_shot_sessions_data",
   "info": {
-    "singularName": "session-data",
-    "pluralName": "sessions-data",
-    "displayName": "Campaign Session Data"
+    "singularName": "one-shot-session-data",
+    "pluralName": "one-shot-sessions-data",
+    "displayName": "One Shot Session Data"
   },
   "options": {
     "draftAndPublish": true
@@ -14,11 +14,11 @@
     "title": {
       "type": "string"
     },
-    "campaign": {
+    "one_shot": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::campaign.campaign",
-      "inversedBy": "session_data"
+      "target": "api::one-shot.one-shot",
+      "inversedBy": "one_shot_session_data"
     },
     "summary": {
       "type": "text"
