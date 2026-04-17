@@ -19,6 +19,8 @@ export default async function OneShots() {
                             startDate={oneShot.startDate}
                             endDate={oneShot.endDate}
                             href={`/one-shots/${oneShot.slug}`}
+                            image={oneShot.image}
+                            type={"one-shot"}
                         />
                     ))}
                 </div>

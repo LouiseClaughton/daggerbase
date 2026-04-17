@@ -19,6 +19,8 @@ export default async function Campaigns() {
                             startDate={campaign.startDate}
                             endDate={campaign.endDate}
                             href={`/campaigns/${campaign.slug}`}
+                            image={campaign.image}
+                            type={"campaign"}
                         />
                     ))}
                 </div>
