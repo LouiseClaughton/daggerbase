@@ -35,7 +35,7 @@ export default async function OneShotPage({ params }) {
             <div className="w-[75%] h-full overflow-y-auto relative">
                 <div className="h-[320px] w-full">
                     <img
-                        src={oneShot.image?.url}
+                        src={oneShot.Image?.url}
                         className="h-full w-full object-cover"
                     />
                 </div>
