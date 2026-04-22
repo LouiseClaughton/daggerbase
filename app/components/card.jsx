@@ -10,35 +10,22 @@ export default function Card({ title, content, startDate, endDate, type, campaig
     }
 
     return (
-        <div className={`
-            bg-gray-900 rounded-md p-4 min-h-40 flex flex-col font-rubik
-            ${active ? 'bg-white text-black' : 'hover:cursor-pointer hover:bg-gray-900 hover:text-white transition-colors'}
-        `}>
-            {image &&
-                <div className="w-full h-28 pb-4">
-                    <img
-                        src={image?.url}
+        <Link href={href}>
+            <div className={`
+                bg-gray-900 rounded-lg h-full flex flex-col font-rubik flex-1 w-80 overflow-hidden
+                ${active ? 'bg-white text-black' : 'hover:cursor-pointer hover:bg-gray-900 hover:text-white transition-colors'}
+            `}>
+                {image && (
+                    <div className="w-full h-40 pb-4">
+                        <img
+                        src={image}
                         className="h-full w-full object-cover"
-                    />
-                </div>
-            }
-            <h3 className={`font-bold ${active ? 'text-purple-600' : 'text-white'}`}>{title}</h3>
-            <span>{campaign}</span>
-            <span>
-                {startDate ? `${formattedStartDate}` : 'TBC'} 
-                {type === 'campaign'
-                    ? (endDate ? `- ${formattedEndDate}` : ' - Present') 
-                    : ''
-                }
-                {type === 'one-shot'
-                    ? (endDate ? `- ${formattedEndDate}` : '') 
-                    : ''
-                }
-            </span>
-            <p className="line-clamp-3">{content}</p>
-            {href &&
-                <Link href={href}><span className="text-purple-400">View</span></Link>
-            }
-        </div>
+                        alt={title}
+                        />
+                    </div>
+                )}
+                <h3 className={`font-bold ${active ? 'text-purple-600' : 'text-white'} text-center font-amagro pb-4`}>{title}</h3>
+            </div>
+        </Link>
     );
 }
