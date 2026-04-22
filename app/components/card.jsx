@@ -10,19 +10,21 @@ export default function Card({ title, content, startDate, endDate, type, campaig
     }
 
     return (
-        <Link href={href}>
+        <Link href={href ? href : '/'}>
             <div className={`
                 bg-gray-900 rounded-lg h-full flex flex-col font-rubik flex-1 w-80 overflow-hidden
                 ${active ? 'bg-white text-black' : 'hover:cursor-pointer hover:bg-gray-900 hover:text-white transition-colors'}
             `}>
-                {image && (
-                    <div className="w-full h-40 pb-4">
+                {image ? (
+                    <div className="w-full h-40 mb-4">
                         <img
-                        src={image}
-                        className="h-full w-full object-cover"
-                        alt={title}
+                            src={image}
+                            className="h-full w-full object-cover"
+                            alt={title}
                         />
                     </div>
+                ) : (
+                    <div className="w-full h-40 mb-4 bg-gray-400"></div>
                 )}
                 <h3 className={`font-bold ${active ? 'text-purple-600' : 'text-white'} text-center font-amagro pb-4`}>{title}</h3>
             </div>
