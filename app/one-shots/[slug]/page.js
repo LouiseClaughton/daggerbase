@@ -1,8 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
-import CampaignSummary from "../../components/campaignSummary";
-import Sidebar from "../../components/sidebar";
 import Link from "next/link";
 import SessionViewer from "../../components/sessionView";
+import OneShotSummary from "../../components/oneShotSummary";
 
 export default async function OneShotPage({ params }) {
     const supabase = await createClient();
@@ -22,18 +21,13 @@ export default async function OneShotPage({ params }) {
         return <div>One-shot not found</div>;
     }
 
+    console.log(oneShot);
+
     return (
         <div className="h-screen w-full flex">
-            <Sidebar activeTab={"one-shots"} />
-            <div className="bg-black w-full sm:w-[75%] h-full">
+            <div className="bg-black w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
                 <div className="flex flex-col">
-                    <div className="p-8 sm:p-16 gradient-border text-white">
-                        <div className="flex justify-between items-center mb-8">
-                            <h2 className="font-amagro text-xl">{oneShot.title}</h2>
-                            <Link href={`/resources/${oneShot.slug}`} className="font-amagro text-base underline">Downloads</Link>
-                        </div>
-                        <CampaignSummary summary={oneShot.summary} />
-                    </div>
+                    <OneShotSummary title={oneShot.title} date={oneShot.start_date} slug={oneShot.slug} summary={oneShot.summary} />
                     <SessionViewer sessions={oneShot.Sessions} />
                 </div>
             </div>

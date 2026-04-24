@@ -1,9 +1,8 @@
 import Link from "next/link";
 
-export default function SessionCard({ title, content, startDate, endDate, type, campaign, href, activeSession }) {
+export default function SessionCard({ title, content, date, activeSession }) {
     let active;
-    let formattedStartDate = new Date(startDate).toLocaleDateString('en-GB');
-    let formattedEndDate = new Date(endDate).toLocaleDateString('en-GB');
+    let formattedDate = new Date(date).toLocaleDateString('en-GB');
 
     if (activeSession && title == activeSession.title) {
         active = true;
@@ -15,7 +14,7 @@ export default function SessionCard({ title, content, startDate, endDate, type, 
             ${active ? 'bg-white text-black' : 'hover:cursor-pointer hover:bg-gray-900 hover:text-white transition-colors'}
         `}>
             <h3 className={`font-bold ${active ? 'text-purple-600' : 'text-white'} text-center font-amagro pt-4 pb-2`}>{title}</h3>
-            <span className="pb-4">{startDate}</span>
+            <span className="pb-4">{formattedDate}</span>
             <div className="line-clamp-3">
                 {content}
             </div>

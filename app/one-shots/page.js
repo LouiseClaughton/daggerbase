@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
 import Card from "../components/card";
-import Sidebar from "../components/sidebar";
 
 export default async function OneShots() {
     const supabase = await createClient()
@@ -8,8 +7,7 @@ export default async function OneShots() {
 
     return (
         <div className="h-screen w-full flex">
-            <Sidebar activeTab={"one-shots"} />
-            <div className="bg-black w-full sm:w-[75%] h-full">
+            <div className="bg-black w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
                 <div className="flex flex-col">
                     <div className="p-8 sm:p-16">
                         <div className="flex justify-between items-center mb-8">

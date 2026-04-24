@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import Sidebar from "../../components/sidebar";
 import CampaignSummary from "../../components/campaignSummary";
 import Link from "next/link";
 import Card from "../../components/card";
@@ -26,16 +25,9 @@ export default async function CampaignPage({ params }) {
 
     return (
         <div className="h-screen w-full flex">
-            <Sidebar activeTab={"campaigns"} />
-            <div className="bg-black w-full sm:w-[75%] h-full">
+            <div className="bg-black w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
                 <div className="flex flex-col">
-                    <div className="p-8 sm:p-16 gradient-border">
-                        <div className="flex justify-between items-center mb-8">
-                            <h2 className="font-amagro text-xl">{campaign.title}</h2>
-                            <Link href={`/resources/${campaign.slug}`} className="font-amagro text-base underline">Downloads</Link>
-                        </div>
-                        <CampaignSummary summary={campaign.summary} />
-                    </div>
+                    <CampaignSummary title={campaign.title} slug={campaign.slug} startDate={campaign.start_date} endDate={campaign.end_date} summary={campaign.summary} />
                     <SessionViewer sessions={campaign.Sessions} />
                 </div>
             </div>

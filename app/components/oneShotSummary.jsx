@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function CampaignSummary({ title, summary, slug, startDate, endDate }) {
+export default function CampaignSummary({ title, summary, slug, date }) {
   const [open, setOpen] = useState(false);
 
   function formatDate(dateStr) {
@@ -19,14 +19,11 @@ export default function CampaignSummary({ title, summary, slug, startDate, endDa
       </div>
       <div className="mb-4">
         <span>
-          {startDate && 
-              formatDate(startDate)
+          {date ?
+              formatDate(date)
+          : 
+              "TBC"
           }
-          {endDate ? (
-              formatDate(endDate)
-          ) : (
-              <span> - Present</span>
-          )}
         </span>
       </div>
       <div className={`${open ? "" : "line-clamp-2"} whitespace-pre-line`}>

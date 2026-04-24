@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { Inria_Serif } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import Sidebar from "./components/sidebar";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -19,6 +21,11 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const inriaSerif = Inria_Serif({
+  variable: "--font-inria-serif",
+  weight: "400"
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,13 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="sm:overflow-hidden">
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={`${geistSans.className} ${inriaSerif.className} antialiased flex`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <Sidebar />
           {children}
         </ThemeProvider>
       </body>

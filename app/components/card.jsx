@@ -1,9 +1,12 @@
-import Link from "next/link";
+"use client";
 
-export default function Card({ title, content, startDate, endDate, type, campaign, href, activeSession, image }) {
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+
+export default function Card({ title, href, activeSession, image }) {
     let active;
-    let formattedStartDate = new Date(startDate).toLocaleDateString('en-GB');
-    let formattedEndDate = new Date(endDate).toLocaleDateString('en-GB');
+    const [loaded, setLoaded] = useState(false);
 
     if (activeSession && title == activeSession.title) {
         active = true;
@@ -16,11 +19,22 @@ export default function Card({ title, content, startDate, endDate, type, campaig
                 ${active ? 'bg-white text-black' : 'hover:cursor-pointer hover:bg-gray-900 hover:text-white transition-colors'}
             `}>
                 {image ? (
-                    <div className="w-full h-40 mb-4">
-                        <img
+                    <div className="w-full h-40 mb-4 relative bg-gray-800 overflow-hidden">
+                        
+                        {/* Skeleton */}
+                        {!loaded && (
+                            <div className="absolute inset-0 animate-pulse bg-gray-700" />
+                        )}
+
+                        {/* Image */}
+                        <Image
                             src={image}
-                            className="h-full w-full object-cover"
                             alt={title}
+                            fill
+                            onLoad={() => setLoaded(true)}
+                            className={`object-cover transition-opacity duration-500 ${
+                                loaded ? "opacity-100" : "opacity-0"
+                            }`}
                         />
                     </div>
                 ) : (
