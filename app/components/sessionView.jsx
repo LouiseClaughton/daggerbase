@@ -12,7 +12,7 @@ export default function SessionViewer({ sessions }) {
     }
 
     return (
-        <div className="flex flex-col sm:grid sm:grid-cols-3 h-[70vh] min-h-0 sm:overflow-hidden pb-12 sm:p-0">
+        <div className="flex flex-col sm:grid sm:grid-cols-3 h-[65vh] min-h-0 sm:overflow-hidden pb-12 sm:p-0">
         
             <div className={`flex sm:flex-col ${sessions.length > 0 ? 'border-r border-gray-500' : ''} px-6 sm:py-6 sm:px-6 h-full overflow-y-auto min-h-0 items-center gap-8`}>
                 {sessions?.map(session => (
