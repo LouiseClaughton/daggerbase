@@ -1,10 +1,10 @@
 <a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
+  <img alt="Daggerbase - A database for storing Daggerheart campaigns" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
+  <h1 align="center">Daggerbase</h1>
 </a>
 
 <p align="center">
- The fastest way to build apps with Next.js and Supabase
+ A database powered by Supabase for storing Daggerheart campaigns
 </p>
 
 <p align="center">
@@ -26,8 +26,7 @@
   - Client
   - Server
   - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
+- Supabase for database storage
 - Styling with [Tailwind CSS](https://tailwindcss.com)
 - Components with [shadcn/ui](https://ui.shadcn.com/)
 - Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
@@ -86,7 +85,9 @@ If you wish to just develop locally and not deploy to Vercel, [follow the steps 
 
   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
 
-5. You can now run the Next.js local development server:
+5. To allow public access to the data without authentication, disable Row Level Security (RLS) on the `Campaigns` and `One-Shots` tables in your Supabase project dashboard under the SQL Editor or Table Editor.
+
+6. You can now run the Next.js local development server:
 
    ```bash
    npm run dev
@@ -94,7 +95,7 @@ If you wish to just develop locally and not deploy to Vercel, [follow the steps 
 
    The starter kit should now be running on [localhost:3000](http://localhost:3000/).
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+7. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
 
 > Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
 
