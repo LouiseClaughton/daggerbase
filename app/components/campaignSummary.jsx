@@ -14,8 +14,7 @@ export default function CampaignSummary({ title, summary, slug, startDate, endDa
   return (
     <div className={`p-8 sm:p-16 gradient-border relative flex justify-center flex-col ${open ? "" : "h-[35vh]"}`}>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="font-amagro text-xl">{title}</h2>
-        {/* <Link href={`/resources/${slug}`} className="font-amagro text-base underline">Downloads</Link> */}
+        <h2 className="text-xl">{title}</h2>
       </div>
       <div className="mb-4">
         <span>

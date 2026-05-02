@@ -40,7 +40,7 @@ export default function Card({ title, href, activeSession, image }) {
                 ) : (
                     <div className="w-full h-40 mb-4 bg-gray-400"></div>
                 )}
-                <h3 className={`font-bold ${active ? 'text-purple-600' : 'text-white'} text-center font-amagro pb-4`}>{title}</h3>
+                <h3 className={`font-bold ${active ? 'text-purple-600' : 'text-white'} text-center pb-4`}>{title}</h3>
             </div>
         </Link>
     );

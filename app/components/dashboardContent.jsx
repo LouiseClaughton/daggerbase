@@ -19,8 +19,8 @@ export default async function DashboardContent() {
         <div className="flex flex-col">
             <div className="gradient-border p-8 sm:p-16 relative">
                 <div className="flex justify-between items-center mb-8">
-                    <h2 className="font-amagro text-xl">Campaigns</h2>
-                    <Link href="/campaigns" className="font-amagro text-base underline">
+                    <h2 className="text-xl">Campaigns</h2>
+                    <Link href="/campaigns" className="text-base underline">
                         All Campaigns
                     </Link>
                 </div>
@@ -39,8 +39,8 @@ export default async function DashboardContent() {
 
             <div className="p-8 sm:p-16">
                 <div className="flex justify-between items-center mb-8">
-                    <h2 className="font-amagro text-xl">One-Shots</h2>
-                    <Link href="/one-shots" className="font-amagro text-base underline">
+                    <h2 className="text-xl">One-Shots</h2>
+                    <Link href="/one-shots" className="text-base underline">
                         All One-Shots
                     </Link>
                 </div>

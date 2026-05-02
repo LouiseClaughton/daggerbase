@@ -26,6 +26,8 @@ const inriaSerif = Inria_Serif({
   weight: "400"
 });
 
+import { Chillax } from './fonts'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="sm:overflow-hidden">
-      <body className={`${geistSans.className} ${inriaSerif.className} antialiased flex`}>
+      <body className={`${geistSans.className} ${inriaSerif.className} ${Chillax.variable} antialiased flex`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -16,7 +16,7 @@ export default function Sidebar() {
         <>
             <div className="fixed sm:hidden w-full flex justify-between items-center px-8 pb-8 pt-8 bg-black z-[99] gradient-border">
                 <Link href="/" onClick={() => setOpen(false)}>
-                    <h1 className="font-amagro text-white text-3xl">
+                    <h1 className="text-white text-3xl">
                         Daggerbase
                     </h1>
                 </Link>
@@ -29,7 +29,7 @@ export default function Sidebar() {
                 </button>
             </div>
 
-            {/* Overlay (optional but nice UX) */}
+            {/* Overlay */}
             {open && (
                 <div
                     onClick={() => setOpen(false)}
@@ -46,29 +46,23 @@ export default function Sidebar() {
             >
                 <div className={`sidebar-link relative hidden sm:block ${getActive("/")}`}>
                     <Link href="/" onClick={() => setOpen(false)}>
-                        <h1 className="font-amagro text-white text-3xl pl-8">
+                        <h1 className="text-white text-3xl pl-8">
                             Daggerbase
                         </h1>
                     </Link>
                 </div>
 
-                <div className={`sidebar-link pt-6 pb-2 px-4 pl-8 font-amagro relative ${getActive("/campaigns")}`}>
+                <div className={`sidebar-link pt-6 pb-2 px-4 pl-8 relative ${getActive("/campaigns")}`}>
                     <Link href="/campaigns" onClick={() => setOpen(false)}>
                         Campaigns
                     </Link>
                 </div>
 
-                <div className={`sidebar-link pt-6 pb-2 px-4 pl-8 font-amagro relative ${getActive("/one-shots")}`}>
+                <div className={`sidebar-link pt-6 pb-2 px-4 pl-8 relative ${getActive("/one-shots")}`}>
                     <Link href="/one-shots" onClick={() => setOpen(false)}>
                         One-Shots
                     </Link>
                 </div>
-
-                {/* <div className={`sidebar-link pt-6 pb-2 px-4 pl-8 font-amagro relative ${getActive("/resources")}`}>
-                    <Link href="/resources" onClick={() => setOpen(false)}>
-                        Resources
-                    </Link>
-                </div> */}
             </div>
         </>
     );
