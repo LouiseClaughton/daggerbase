@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import Card from "../components/card";
+import CreateCampaignForm from '../components/create-campaign-form';
 
 export default async function Campaigns() {
     const supabase = await createClient()
@@ -11,6 +12,9 @@ export default async function Campaigns() {
                     <div className="p-8 sm:p-16">
                         <div className="flex justify-between items-center mb-8">
                             <h2 className="text-xl">Campaigns</h2>
+                        </div>
+                        <div>
+                        <CreateCampaignForm />
                         </div>
                         <div className="flex gap-8 flex-col sm:flex-row">
                             {campaigns.map(campaign => (

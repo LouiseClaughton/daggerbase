@@ -5,6 +5,7 @@ import CampaignSummary from "../../components/campaignSummary";
 import Link from "next/link";
 import Card from "../../components/card";
 import SessionViewer from "../../components/sessionView";
+import EditCampaignForm from "../../components/campaign-settings";
 
 export default async function CampaignPage({ params }) {
     const supabase = await createClient();
@@ -29,7 +30,7 @@ export default async function CampaignPage({ params }) {
         <div className="h-screen w-full flex">
             <div className="bg-gray-200 w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
                 <div className="flex flex-col">
-                    <CampaignSummary title={campaign.title} slug={campaign.slug} startDate={campaign.start_date} endDate={campaign.end_date} summary={campaign.summary} />
+                    <CampaignSummary campaign={campaign} />
                     <SessionViewer sessions={campaign.Sessions} />
                 </div>
             </div>
