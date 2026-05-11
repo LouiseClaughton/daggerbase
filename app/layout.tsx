@@ -35,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="sm:overflow-hidden">
-      <body className={`${geistSans.className} ${inriaSerif.className} ${Chillax.variable} antialiased flex bg-gray-200 text-black`}>
+      <body className={`${geistSans.className} ${inriaSerif.className} ${Chillax.variable} antialiased flex bg-zinc-900 text-black`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

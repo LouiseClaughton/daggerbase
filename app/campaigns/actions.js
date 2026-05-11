@@ -13,16 +13,17 @@ function slugify(text) {
 }
 
 export async function saveCampaign(prevState, formData) {
-    const supabase = await createClient()
+    console.log(prevState, formData);
+    const supabase = await createClient();
 
-    const id = formData.get('id')
+    const id = formData.get('id');
 
-    const title = formData.get('title')
-    const summary = formData.get('summary')
-    const start_date = formData.get('start_date')
-    const end_date = formData.get('end_date')
+    const title = formData.get('title');
+    const summary = formData.get('summary');
+    const start_date = formData.get('start_date');
+    const end_date = formData.get('end_date');
 
-    let slug = formData.get('slug')
+    let slug = formData.get('slug');
 
     // Auto-generate slug if creating
     if (!slug && title) {
@@ -33,35 +34,61 @@ export async function saveCampaign(prevState, formData) {
         title,
         slug,
         summary,
-        start_date,
-        end_date
+        start_date: start_date || null,
+        end_date: end_date || null,
+        campaign_status: formData.get('campaign_status') || 'Upcoming'
     }
 
     // UPDATE
     if (id) {
         const { data, error } = await supabase
-            .from('Campaigns')
+            .from("Campaigns")
             .update(payload)
+            .eq("id", Number(id))
+            .select();
+
+        if (error) {
+            return { error: error.message };
+        }
+
+        revalidatePath("/campaigns");
+        revalidatePath(`/campaigns/${slug}`);
+
+        return { success: true };
+    }
+
+    // CREATE
+    const { createData, createError } = await supabase
+        .from('Campaigns')
+        .insert([payload])
+        .select()
+        .single()
+
+    if (createError) {
+        return { error: createError.message }
+    }
+
+    redirect(`/campaigns/${data.slug}`)
+}
+
+export async function deleteCampaign(formData) {
+    const supabase = await createClient()
+
+    const id = formData.get('id');
+    let slug = formData.get('slug')
+
+     // DELETE
+
+    if (id) {
+        const { deleteData, deleteError } = await supabase
+            .from('Campaigns')
+            .delete()
             .eq('id', id)
             .select()
 
         revalidatePath('/campaigns')
         revalidatePath(`/campaigns/${slug}`)
 
-        return { success: true }
+        redirect("/campaigns");
     }
-
-    // CREATE
-    const { data, error } = await supabase
-        .from('Campaigns')
-        .insert([payload])
-        .select()
-        .single()
-
-    if (error) {
-        console.error(error)
-        return { error: error.message }
-    }
-
-    redirect(`/campaigns/${data.slug}`)
 }

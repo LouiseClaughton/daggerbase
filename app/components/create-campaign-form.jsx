@@ -8,7 +8,7 @@ export default function CreateCampaignForm() {
   const [state, action, isPending] = useActionState(saveCampaign, null);
 
   return (
-    <div className="bg-gray-300 p-4 rounded-xl mb-8 w-fit flex flex-col gap-4">
+    <div className="bg-[#395a4f] p-4 rounded-xl mb-8 w-full flex flex-col gap-4">
       <span className="font-semibold">Start a new campaign</span>
       {state?.error && (
         <div className="text-red-600 text-sm">{state.error}</div>
@@ -18,7 +18,7 @@ export default function CreateCampaignForm() {
           type="text"
           name="title"
           placeholder="Campaign title"
-          className="border border-gray-500 p-2 bg-gray-300 rounded-xl"
+          className="border border-gray-400 p-2 bg-[#395a4f] rounded-xl w-full"
           required
         />
 

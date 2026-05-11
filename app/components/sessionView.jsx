@@ -27,7 +27,7 @@ export default function SessionViewer({ sessions }) {
                 ))}
             </div>
 
-            <div className="col-span-2 p-6 h-full sm:overflow-y-auto whitespace-pre-line min-h-0 text-black">
+            <div className="col-span-2 p-6 h-full sm:overflow-y-auto whitespace-pre-line min-h-0">
                 <div className="pb-4">
                     <h3 className="text-xl pb-4">{activeSession?.title}</h3>
                     <span className="mb-4">

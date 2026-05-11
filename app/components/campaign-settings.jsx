@@ -1,7 +1,7 @@
 "use client";
 
-import { saveCampaign } from "@/app/campaigns/actions";
-import { useActionState, useEffect } from "react";
+import { saveCampaign, deleteCampaign } from "@/app/campaigns/actions";
+import { useActionState, useEffect, useState } from "react";
 import RightArrow from "../assets/right-arrow";
 
 export default function EditCampaignForm({
@@ -10,6 +10,9 @@ export default function EditCampaignForm({
         onClose,
     }) {
         const [state, action, isPending] = useActionState(saveCampaign, null);
+        const [status, setStatus] = useState(
+            campaign.campaign_status || "Upcoming"
+        );
 
         // Close after successful save
         useEffect(() => {
@@ -17,6 +20,10 @@ export default function EditCampaignForm({
             onClose();
             }
         }, [state, onClose]);
+
+        useEffect(() => {
+            setStatus(campaign.campaign_status || "Upcoming");
+        }, [campaign]);
 
         if (!open) return null;
 
@@ -78,25 +85,42 @@ export default function EditCampaignForm({
                         required
                     />
 
-                    <label htmlFor="start_date">
-                        Start Date
-                    </label>
-                    <input
-                        type="date"
-                        name="start_date"
-                        defaultValue={campaign.start_date}
-                        className="border border-gray-500 p-2 rounded-xl"
-                    />
+                    <div className="grid grid-cols-2 gap-2">
+                        <label htmlFor="start_date">
+                            Start Date
+                        </label>
 
-                    <label htmlFor="end_date">
-                        End Date
-                    </label>
-                    <input
-                        type="date"
-                        name="end_date"
-                        defaultValue={campaign.end_date}
+                        <label htmlFor="end_date">
+                            End Date
+                        </label>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                        <input
+                            type="date"
+                            name="start_date"
+                            defaultValue={campaign.start_date?.split("T")[0]}
+                            className="border border-gray-500 p-2 rounded-xl"
+                        />
+                        <input
+                            type="date"
+                            name="end_date"
+                            defaultValue={campaign.end_date?.split("T")[0]}
+                            className="border border-gray-500 p-2 rounded-xl"
+                        />
+                    </div>
+
+                    <label htmlFor="campaign_status">Status</label>
+                    <select
+                        name="campaign_status"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
                         className="border border-gray-500 p-2 rounded-xl"
-                    />
+                    >
+                        <option value="Upcoming">Upcoming</option>
+                        <option value="Ongoing">Ongoing</option>
+                        <option value="Completed">Completed</option>
+                    </select>
 
                     <label htmlFor="summary">Summary</label>
                     <textarea
@@ -113,6 +137,33 @@ export default function EditCampaignForm({
                         {isPending
                         ? "Saving..."
                         : <RightArrow className="w-5 h-5" />}
+                    </button>
+                </form>
+                <form
+                    action={deleteCampaign}
+                >
+                    <input
+                        type="hidden"
+                        name="id"
+                        value={campaign.id}
+                    />
+
+                    <input
+                        type="hidden"
+                        name="slug"
+                        value={campaign.slug}
+                    />
+
+                    <button
+                        type="submit"
+                        onClick={(e) => {
+                            if (!confirm("Delete this campaign?")) {
+                                e.preventDefault();
+                            }
+                        }}
+                        className="bg-red-600 text-white px-3 py-3 rounded-xl w-full self-start"
+                    >
+                        Delete Campaign
                     </button>
                 </form>
             </div>

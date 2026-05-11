@@ -28,7 +28,7 @@ export default async function CampaignPage({ params }) {
 
     return (
         <div className="h-screen w-full flex">
-            <div className="bg-gray-200 w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
+            <div className="bg-gray-800 text-white w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
                 <div className="flex flex-col">
                     <CampaignSummary campaign={campaign} />
                     <SessionViewer sessions={campaign.Sessions} />
