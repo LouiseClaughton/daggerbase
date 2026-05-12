@@ -8,51 +8,13 @@ import Tag from '../components/tag';
 export default async function Campaigns() {
     const supabase = await createClient()
 
-    const [
-        { data: campaigns, error: campaignsError },
-        { data: oneShots, error: oneShotsError }
-    ] = await Promise.all([
-        supabase
-            .from("Campaigns")
-            .select(`
+    const { data: campaigns, error } = await supabase
+        .from("Campaigns")
+        .select(`
             *,
-                Sessions (*),
-                Characters (*)
-            `),
-
-        supabase
-            .from("One-Shots")
-            .select(`
-            *,
-                Sessions (*)
-            `)
-        ])
-
-        if (campaignsError) throw campaignsError
-        if (oneShotsError) throw oneShotsError
-
-        const combined = [
-        ...(campaigns || []).map(campaign => ({
-            ...campaign,
-            type: "Campaign"
-        })),
-
-        ...(oneShots || []).map(oneShot => ({
-            ...oneShot,
-            type: "One-Shot"
-        }))
-    ]
-
-    const latestCampaign = campaigns
-        .filter(
-            (campaign) =>
-                campaign.status === "Completed" ||
-                campaign.status === "Ongoing"
-        )
-        .sort(
-            (a, b) =>
-                new Date(b.start_date) - new Date(a.start_date)
-        )[0];
+            Sessions (*),
+            Characters (*)
+        `);
 
     function formatDate(dateStr) {
         const [year, month, day] = dateStr.split("-");
@@ -79,7 +41,7 @@ export default async function Campaigns() {
                             </div>
 
                             <div className="grid grid-cols-3 gap-8">
-                                {combined.map((item) => (
+                                {campaigns.map((item) => (
                                     <div
                                         key={`${item.type}-${item.id}`}
                                         className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
@@ -88,7 +50,6 @@ export default async function Campaigns() {
                                         <p className="line-clamp-5">{item.summary}</p>
                                         <div className="flex w-full justify-between">
                                             <div className="flex gap-2">
-                                                <Tag type={item.type} />
                                                 <Tag status={item.status} />
                                             </div>
                                             <Link

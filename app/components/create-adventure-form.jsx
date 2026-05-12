@@ -1,16 +1,16 @@
+
 "use client";
 
-import { saveCampaign } from "@/app/campaigns/actions";
+import { saveAdventure } from "@/app/one-shots/actions";
 import { useActionState } from "react";
 import RightArrow from "../assets/right-arrow";
 
-export default function CreateCampaignForm() {
-  const [state, action, isPending] = useActionState(saveCampaign, null);
+export default function CreateAdventureForm() {
+  const [state, action, isPending] = useActionState(saveAdventure, null);
 
   return (
-    <div className="flex w-full gap-8">
-      <div className="p-4 rounded-xl mb-8 w-full flex flex-col gap-4 border border-black">
-        <span className="font-semibold">Start a new campaign</span>
+    <div className="p-4 rounded-xl mb-8 w-full flex flex-col gap-4 border border-black">
+        <span className="font-semibold">Start a new adventure</span>
         {state?.error && (
           <div className="text-red-600 text-sm">{state.error}</div>
         )}
@@ -18,7 +18,7 @@ export default function CreateCampaignForm() {
           <input
             type="text"
             name="title"
-            placeholder="Campaign title"
+            placeholder="Adventure title"
             className="border border-gray-400 p-2 rounded-xl w-full bg-white"
             required
           />
@@ -31,7 +31,6 @@ export default function CreateCampaignForm() {
             <RightArrow className="w-5 h-5" />
           </button>
         </form>
-      </div>
     </div>
-  );
+  )
 }

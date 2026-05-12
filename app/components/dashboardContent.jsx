@@ -1,59 +1,110 @@
 export const dynamic = "force-dynamic";
 
 import { createClient } from '@/lib/supabase/server';
-import Card from './card';
 import Link from 'next/link';
+import CreateCampaignForm from '../components/create-campaign-form';
+import RightArrow from '../assets/right-arrow';
+import Tag from '../components/tag';
+import CreateAdventureForm from '../components/create-adventure-form';
 
 export default async function DashboardContent() {
     const supabase = await createClient();
+    const [
+        { data: campaigns, error: campaignsError },
+        { data: oneShots, error: oneShotsError }
+    ] = await Promise.all([
+        supabase
+            .from("Campaigns")
+            .select(`
+            *,
+                Sessions (*),
+                Characters (*)
+            `),
 
-    const [campaignsRes, oneShotsRes] = await Promise.all([
-        supabase.from('Campaigns').select(),
-        supabase.from('One-Shots').select(),
-    ]);
+        supabase
+            .from("One-Shots")
+            .select(`
+            *,
+                Sessions (*)
+            `)
+        ])
 
-    const campaigns = campaignsRes.data || [];
-    const oneShots = oneShotsRes.data || [];
+        if (campaignsError) throw campaignsError
+        if (oneShotsError) throw oneShotsError
+
+        const combined = [
+        ...(campaigns || []).map(campaign => ({
+            ...campaign,
+            type: "Campaign"
+        })),
+
+        ...(oneShots || []).map(oneShot => ({
+            ...oneShot,
+            type: "One-Shot"
+        }))
+    ]
+
+    const latestCampaign = campaigns
+        .filter(
+            (campaign) =>
+                campaign.status === "Completed" ||
+                campaign.status === "Ongoing"
+        )
+        .sort(
+            (a, b) =>
+                new Date(b.start_date) - new Date(a.start_date)
+        )[0];
+
+    function formatDate(dateStr) {
+        const [year, month, day] = dateStr.split("-");
+        return `${day}/${month}/${year}`;
+    }
+
+    function formatDateAsYear(dateStr) {
+        const [year, month, day] = dateStr.split("-");
+        return `${year}`;
+    }
 
     return (
-        <div className="flex flex-col">
-            <div className="gradient-border p-8 sm:p-16 relative">
-                <div className="flex justify-between items-center mb-8">
-                    <h2 className="text-xl">Campaigns</h2>
-                    <Link href="/campaigns" className="text-base underline">
-                        All Campaigns
-                    </Link>
-                </div>
+        <div className="w-full">
+            <div className="bg-white text-black w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
+                <div className="flex flex-col">
+                    <div className="p-8 sm:p-16 relative sm:ml-20">
+                        <div className="flex justify-between items-center mb-8">
+                            <h2 className="text-5xl">Dashboard</h2>
+                        </div>
 
-                <div className="flex gap-8 flex-col sm:flex-row">
-                    {campaigns.map((campaign) => (
-                        <Card
-                            key={campaign.id}
-                            title={campaign.title}
-                            href={`/campaigns/${campaign.slug}`}
-                            image={campaign.image_url}
-                        />
-                    ))}
-                </div>
-            </div>
+                        <div>
+                            <div className="w-full flex gap-8">
+                                <CreateCampaignForm />
+                                <CreateAdventureForm />
+                            </div>
 
-            <div className="p-8 sm:p-16">
-                <div className="flex justify-between items-center mb-8">
-                    <h2 className="text-xl">One-Shots</h2>
-                    <Link href="/one-shots" className="text-base underline">
-                        All One-Shots
-                    </Link>
-                </div>
-
-                <div className="flex gap-8 flex-col sm:flex-row">
-                    {oneShots.map((oneShot) => (
-                        <Card
-                            key={oneShot.id}
-                            title={oneShot.title}
-                            href={`/one-shots/${oneShot.slug}`}
-                            image={oneShot.image_url}
-                        />
-                    ))}
+                            <div className="grid grid-cols-3 gap-8">
+                                {combined.map((item) => (
+                                    <div
+                                        key={`${item.type}-${item.id}`}
+                                        className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
+                                    >
+                                        <h2 className="text-3xl">{item.title}</h2>
+                                        <p className="line-clamp-5">{item.summary}</p>
+                                        <div className="flex w-full justify-between">
+                                            <div className="flex gap-2">
+                                                <Tag type={item.type} />
+                                                <Tag status={item.status} />
+                                            </div>
+                                            <Link
+                                                href={`/campaigns/${item.slug}`}
+                                                className="bg-black text-white px-3 py-3 rounded-xl w-fit justify-self-end"
+                                            >
+                                                <RightArrow className="w-5 h-5" />
+                                            </Link>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

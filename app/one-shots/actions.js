@@ -12,7 +12,7 @@ function slugify(text) {
         .replace(/\s+/g, '-')
 }
 
-export async function saveCampaign(prevState, formData) {
+export async function saveAdventure(prevState, formData) {
     const supabase = await createClient();
 
     const id = formData.get('id');
@@ -41,7 +41,7 @@ export async function saveCampaign(prevState, formData) {
     // UPDATE
     if (id) {
         const { data, error } = await supabase
-            .from("Campaigns")
+            .from("One-Shots")
             .update(payload)
             .eq("id", Number(id))
             .select();
@@ -50,15 +50,15 @@ export async function saveCampaign(prevState, formData) {
             return { error: error.message };
         }
 
-        revalidatePath("/campaigns");
-        revalidatePath(`/campaigns/${slug}`);
+        revalidatePath("/one-shots");
+        revalidatePath(`/one-shots/${slug}`);
 
         return { success: true };
     }
 
     // CREATE
     const { createData, createError } = await supabase
-        .from('Campaigns')
+        .from('One-Shots')
         .insert([payload])
         .select()
         .single()
@@ -67,10 +67,10 @@ export async function saveCampaign(prevState, formData) {
         return { error: createError.message }
     }
 
-    redirect(`/campaigns/${slug}`)
+    redirect(`/one-shots/${slug}`)
 }
 
-export async function deleteCampaign(formData) {
+export async function deleteAdventure(formData) {
     const supabase = await createClient()
 
     const id = formData.get('id');
@@ -80,7 +80,7 @@ export async function deleteCampaign(formData) {
 
     if (id) {
         const { deleteData, deleteError } = await supabase
-            .from('Campaigns')
+            .from('One-Shots')
             .delete()
             .eq('id', id)
             .select()
