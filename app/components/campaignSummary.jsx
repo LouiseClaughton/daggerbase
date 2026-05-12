@@ -29,8 +29,8 @@ export default function CampaignSummary({ campaign }) {
       </div>
       <div className="mb-4">
         {(
-            campaign.campaign_status === "Completed" ||
-            campaign.campaign_status === "Ongoing"
+            campaign.status === "Completed" ||
+            campaign.status === "Ongoing"
         ) && (
           <span>
             {campaign.start_date && 
@@ -43,7 +43,7 @@ export default function CampaignSummary({ campaign }) {
             )}
           </span>
         )}
-        {campaign.campaign_status === "Upcoming" && campaign.start_date && (
+        {campaign.status === "Upcoming" && campaign.start_date && (
           <span>{formatDateAsYear(campaign.start_date)}</span>
         )}
       </div>

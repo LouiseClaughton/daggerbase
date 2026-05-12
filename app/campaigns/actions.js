@@ -36,7 +36,7 @@ export async function saveCampaign(prevState, formData) {
         summary,
         start_date: start_date || null,
         end_date: end_date || null,
-        campaign_status: formData.get('campaign_status') || 'Upcoming'
+        status: formData.get('status') || 'Upcoming'
     }
 
     // UPDATE

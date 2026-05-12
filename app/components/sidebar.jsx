@@ -61,7 +61,7 @@ export default function Sidebar() {
             className={`
                 fixed sm:relative sm:top-0 left-0
                 h-[calc(100vh-2rem)]
-                z-50 bg-zinc-700 mx-6 my-4 rounded-3xl
+                z-50 bg-zinc-900 mx-6 my-4 rounded-3xl
                 flex flex-col items-center gap-1
                 transform transition-transform duration-300 sm:translate-x-0
                 ${open ? "translate-x-0" : "-translate-x-full"}

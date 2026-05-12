@@ -11,7 +11,7 @@ export default function EditCampaignForm({
     }) {
         const [state, action, isPending] = useActionState(saveCampaign, null);
         const [status, setStatus] = useState(
-            campaign.campaign_status || "Upcoming"
+            campaign.status || "Upcoming"
         );
 
         // Close after successful save
@@ -22,7 +22,7 @@ export default function EditCampaignForm({
         }, [state, onClose]);
 
         useEffect(() => {
-            setStatus(campaign.campaign_status || "Upcoming");
+            setStatus(campaign.status || "Upcoming");
         }, [campaign]);
 
         if (!open) return null;
@@ -110,9 +110,9 @@ export default function EditCampaignForm({
                         />
                     </div>
 
-                    <label htmlFor="campaign_status">Status</label>
+                    <label htmlFor="status">Status</label>
                     <select
-                        name="campaign_status"
+                        name="status"
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
                         className="border border-gray-500 p-2 rounded-xl"
