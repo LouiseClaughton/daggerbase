@@ -46,13 +46,13 @@ export default async function OneShots() {
                                         className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
                                     >
                                         <h2 className="text-3xl">{item.title}</h2>
-                                        <p className="line-clamp-5">{item.summary}</p>
+                                        <p className="line-clamp-5 leading-6 h-[7.5rem]">{item.summary}</p>
                                         <div className="flex w-full justify-between">
                                             <div className="flex gap-2">
                                                 <Tag status={item.status} />
                                             </div>
                                             <Link
-                                                href={`/campaigns/${item.slug}`}
+                                                href={`/one-shots/${item.slug}`}
                                                 className="bg-black text-white px-3 py-3 rounded-xl w-fit justify-self-end"
                                             >
                                                 <RightArrow className="w-5 h-5" />

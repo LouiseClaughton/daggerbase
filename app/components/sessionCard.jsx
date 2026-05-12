@@ -9,7 +9,7 @@ export default function SessionCard({ title, content, date, activeSession }) {
     }
 
     return (
-        <div className={`w-full h-full border border black rounded-xl flex flex-col gap-4 p-4 ${active ? 'bg-gray-100' : 'bg-white'}`}>
+        <div className={`w-full h-full border border black rounded-xl flex flex-col gap-4 p-4 ${active ? 'bg-gray-100' : 'bg-white'} hover:cursor-pointer hover:bg-gray-100 transition-colors`}>
             <h3 className="font-bold text-2xl pt-4">{title}</h3>
             <span>{formattedDate}</span>
             <div className="line-clamp-3">

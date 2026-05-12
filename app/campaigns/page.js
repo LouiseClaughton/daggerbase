@@ -47,7 +47,7 @@ export default async function Campaigns() {
                                         className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
                                     >
                                         <h2 className="text-3xl">{item.title}</h2>
-                                        <p className="line-clamp-5">{item.summary}</p>
+                                        <p className="line-clamp-5 leading-6 h-[7.5rem]">{item.summary}</p>
                                         <div className="flex w-full justify-between">
                                             <div className="flex gap-2">
                                                 <Tag status={item.status} />

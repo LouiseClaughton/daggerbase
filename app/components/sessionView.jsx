@@ -12,10 +12,10 @@ export default function SessionViewer({ sessions }) {
     }
 
     return (
-        <div className="w-full h-full flex flex-col">
-            <div className="flex flex-col sm:grid sm:grid-cols-3 h-[65vh] min-h-0 sm:overflow-hidden">
+        <div className="w-full h-[30rem] flex flex-col">
+            <div className="flex-1 min-h-0 flex flex-col sm:grid sm:grid-cols-[1fr_2fr] gap-8 overflow-hidden">
             
-                <div className={`flex sm:flex-col h-full overflow-y-auto min-h-0 items-center gap-8`}>
+                <div className={`flex flex-col h-full overflow-y-auto min-h-0 items-center gap-8 pr-6`}>
                     {sessions?.map(session => (
                         <div key={session.id} onClick={() => setActiveSession(session)}>
                             <SessionCard
@@ -28,7 +28,7 @@ export default function SessionViewer({ sessions }) {
                     ))}
                 </div>
 
-                <div className="col-span-2 p-6 h-full sm:overflow-y-auto whitespace-pre-line min-h-0">
+                <div className="p-6 sm:overflow-y-auto whitespace-pre-line min-h-0 border border-black rounded-xl">
                     <div className="pb-4">
                         <h3 className="text-2xl pb-4">{activeSession?.title}</h3>
                         <span className="mb-4">
