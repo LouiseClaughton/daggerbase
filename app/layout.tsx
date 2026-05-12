@@ -34,8 +34,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="sm:overflow-hidden">
-      <body className={`${bebasNeue.variable} ${afacad.variable} antialiased flex bg-white text-black`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${bebasNeue.variable} ${afacad.variable} antialiased bg-white text-black`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

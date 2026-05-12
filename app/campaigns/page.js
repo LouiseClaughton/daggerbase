@@ -65,10 +65,10 @@ export default async function Campaigns() {
     }
 
     return (
-        <div className="h-screen w-full flex">
+        <div className="w-full">
             <div className="bg-white text-black w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
                 <div className="flex flex-col">
-                    <div className="p-8 sm:p-16">
+                    <div className="p-8 sm:p-16 relative sm:ml-20">
                         <div className="flex justify-between items-center mb-8">
                             <h2 className="text-5xl">Campaigns</h2>
                         </div>
