@@ -15,7 +15,7 @@ export default function Card({ title, href, activeSession, image }) {
     return (
         <Link href={href ? href : '/'}>
             <div className={`
-                bg-gray-900 rounded-lg h-full flex flex-col font-rubik flex-1 w-80 overflow-hidden
+                bg-gray-200 rounded-lg h-full flex flex-col font-rubik flex-1 w-80 overflow-hidden
                 ${active ? 'bg-white text-black' : 'hover:cursor-pointer hover:bg-gray-900 hover:text-white transition-colors'}
             `}>
                 {image ? (
