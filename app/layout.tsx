@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import { Inria_Serif } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Sidebar from "./components/sidebar";
@@ -15,18 +13,20 @@ export const metadata: Metadata = {
   description: "A database powered by Supabase for storing Daggerheart campaigns",
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  display: "swap",
-  subsets: ["latin"],
-});
+import { Bebas_Neue } from "next/font/google";
+import { Afacad } from "next/font/google";
 
-const inriaSerif = Inria_Serif({
-  variable: "--font-inria-serif",
-  weight: "400"
-});
+const bebasNeue = Bebas_Neue({
+  subsets: ['latin'],
+  weight: '400',
+  variable: "--font-bebas",
+})
 
-import { Chillax } from './fonts'
+const afacad = Afacad({
+  subsets: ['latin'],
+  weight: '400',
+  variable: "--font-afacad",
+})
 
 export default function RootLayout({
   children,
@@ -34,8 +34,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="sm:overflow-hidden">
-      <body className={`${geistSans.className} ${inriaSerif.className} ${Chillax.variable} antialiased flex`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${bebasNeue.variable} ${afacad.variable} antialiased bg-white text-black`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

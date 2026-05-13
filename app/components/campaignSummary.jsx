@@ -2,34 +2,53 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import SettingsIcon from "../assets/settings-icon";
+import EditCampaignForm from "./campaign-settings";
 
-export default function CampaignSummary({ title, summary, slug, startDate, endDate }) {
+export default function CampaignSummary({ campaign }) {
   const [open, setOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   function formatDate(dateStr) {
       const [year, month, day] = dateStr.split("-");
       return `${day}/${month}/${year}`;
   }
 
+  function formatDateAsYear(dateStr) {
+      const [year, month, day] = dateStr.split("-");
+      return `${year}`;
+  }
+
   return (
     <div className={`p-8 sm:p-16 gradient-border relative flex justify-center flex-col ${open ? "" : "h-[35vh]"}`}>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl">{title}</h2>
+        <h2 className="text-xl">{campaign.title}</h2>
+        <div onClick={() => setSettingsOpen(prev => !prev)}>
+          <SettingsIcon />
+        </div>
       </div>
       <div className="mb-4">
-        <span>
-          {startDate && 
-              formatDate(startDate)
-          }
-          {endDate ? (
-              formatDate(endDate)
-          ) : (
-              <span> - Present</span>
-          )}
-        </span>
+        {(
+            campaign.status === "Completed" ||
+            campaign.status === "Ongoing"
+        ) && (
+          <span>
+            {campaign.start_date && 
+                formatDate(campaign.start_date)
+            }
+            {campaign.end_date ? (
+                <span> - {formatDate(campaign.end_date)}</span>
+            ) : (
+                <span> - Present</span>
+            )}
+          </span>
+        )}
+        {campaign.status === "Upcoming" && campaign.start_date && (
+          <span>{formatDateAsYear(campaign.start_date)}</span>
+        )}
       </div>
       <div className={`${open ? "" : "line-clamp-2"} whitespace-pre-line`}>
-        {summary}
+        {campaign.summary}
       </div>
       <button
         onClick={() => setOpen(prev => !prev)}
@@ -37,6 +56,18 @@ export default function CampaignSummary({ title, summary, slug, startDate, endDa
       >
         {open ? "Show Less" : "Show More"}
       </button>
+      <EditCampaignForm
+          open={settingsOpen}
+          onClose={() => setSettingsOpen(false)}
+          campaign={{
+              id: campaign.id,
+              title: campaign.title,
+              slug: campaign.slug,
+              start_date: campaign.start_date,
+              end_date: campaign.end_date,
+              summary: campaign.summary,
+          }}
+      />
     </div>
   );
 }

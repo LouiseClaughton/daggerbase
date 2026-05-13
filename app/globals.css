@@ -29,7 +29,6 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --font-chillax: var(--font-chillax);
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -69,43 +68,13 @@
 }
 
 h1, h2, h3 {
-  font-family: var(--font-chillax) !important;
+  font-family: var(--font-bebas) !important;
   font-weight: 600;
 }
 
 body {
-  font-family: var(--font-chillax) !important;
+  font-family: var(--font-afacad) !important;
   font-weight: 400;
-}
-
-.sidebar-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 1px;
-  width: 50%;
-  transition: width .5s ease-in-out;
-}
-
-.sidebar-link.active::after {
-  width: 100%;
-}
-
-.sidebar-link:nth-of-type(1)::after {
-  border-bottom: 1px solid #FF47ED;
-}
-
-.sidebar-link:nth-of-type(2)::after {
-  border-bottom: 1px solid #7E47FF;
-}
-
-.sidebar-link:nth-of-type(3)::after {
-  border-bottom: 1px solid #47B8FF;
-}
-
-.sidebar-link:nth-of-type(4)::after {
-  border-bottom: 1px solid #7DB876;
 }
 
 .gradient-border::after {
