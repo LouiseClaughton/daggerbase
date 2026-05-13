@@ -44,6 +44,19 @@ export default async function Characters() {
         }))
     ]
 
+    const allCharacters = combined.flatMap(item =>
+        (item.Characters || []).map(character => ({
+            ...character,
+            source: {
+                id: item.id,
+                title: item.title,
+                type: item.type,
+            }
+        }))
+    );
+
+    console.log(allCharacters);
+
     return (
         <div className="h-screen w-full flex">
             <div className="bg-white w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
@@ -56,28 +69,32 @@ export default async function Characters() {
                                         <h2 className="text-5xl">Characters</h2>
                                     </div>
 
-                                    <div>
-                                        {combined.Characters?.length > 0 &&
-                                            <div className="grid grid-cols-3 gap-8">
-                                                {combined.Characters.map((character) => (
-                                                    <div
-                                                        key={`${character.id}`}
-                                                        className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
+                                    <div className="w-full flex flex-col sm:grid sm:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-0">
+                                        {allCharacters.map((character) => (
+                                            <div
+                                                key={`${character.id}`}
+                                                className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
+                                            >
+                                                <div className="flex justify-between">
+                                                    <h2 className="text-2xl">{character.character_name} / {character.player_name}</h2>
+                                                    <Link
+                                                        href={`/characters/${character.slug}`}
+                                                        className="bg-black text-white px-2 py-2 rounded-lg w-fit justify-self-end"
                                                     >
-                                                        <div className="flex justify-between">
-                                                            <h2 className="text-2xl">{character.character_name} / {character.player_name}</h2>
-                                                            <Link
-                                                                href={`/characters/${character.slug}`}
-                                                                className="bg-black text-white px-2 py-2 rounded-lg w-fit justify-self-end"
-                                                            >
-                                                                <RightArrow className="w-5 h-5" />
-                                                            </Link>
-                                                        </div>
-                                                        <p>{character.ancestry} {character.class}</p>
-                                                    </div>
-                                                ))}
+                                                        <RightArrow className="w-5 h-5" />
+                                                    </Link>
+                                                </div>
+                                                <p>{character.ancestry} {character.class}</p>
+                                                <div className="flex gap-2">
+                                                    {character.source && (
+                                                        <Tag
+                                                            text={character.source.title}
+                                                            type={character.source.type}
+                                                        />
+                                                    )}
+                                                </div>
                                             </div>
-                                        }
+                                        ))}
                                     </div>
                                 </div>
                             </div>
