@@ -12,12 +12,26 @@ export default function SessionViewer({ sessions }) {
     }
 
     return (
-        <div className="w-full h-[30rem] flex flex-col">
-            <div className="flex-1 min-h-0 flex flex-col sm:grid sm:grid-cols-[1fr_2fr] gap-8 overflow-hidden">
-            
-                <div className={`flex flex-col h-full overflow-y-auto min-h-0 items-center gap-8 pr-6`}>
+        <div className="w-full h-[45rem] sm:h-[30rem]">
+            <div className="flex flex-col sm:grid sm:grid-cols-[1fr_2fr] gap-8 h-full">
+
+                <div className="
+                    flex sm:flex-col
+    items-stretch
+    gap-8
+    overflow-x-auto
+    sm:overflow-y-auto
+    sm:overflow-x-hidden
+    sm:h-full
+    sm:min-h-0
+    sm:pr-6
+                ">
                     {sessions?.map(session => (
-                        <div key={session.id} onClick={() => setActiveSession(session)}>
+                        <div
+                            key={session.id}
+                            onClick={() => setActiveSession(session)}
+                            className="w-80 sm:w-full flex-shrink-0"
+                        >
                             <SessionCard
                                 title={session.title}
                                 content={session.summary}
@@ -28,16 +42,30 @@ export default function SessionViewer({ sessions }) {
                     ))}
                 </div>
 
-                <div className="p-6 sm:overflow-y-auto whitespace-pre-line min-h-0 border border-black rounded-xl">
+                <div className="
+                    p-6
+                    whitespace-pre-line
+                    border border-black rounded-xl
+
+                    flex-1
+                    overflow-y-auto
+
+                    sm:min-h-0
+                ">
                     <div className="pb-4">
-                        <h3 className="text-2xl pb-4">{activeSession?.title}</h3>
+                        <h3 className="text-2xl pb-4">
+                            {activeSession?.title}
+                        </h3>
+
                         <span className="mb-4">
-                            {activeSession && activeSession.date &&
-                                formatDate(activeSession.date)
-                            }
+                            {activeSession?.date &&
+                                formatDate(activeSession.date)}
                         </span>
                     </div>
-                    <div className="pb-8">{activeSession?.summary}</div>
+
+                    <div className="pb-8">
+                        {activeSession?.summary}
+                    </div>
                 </div>
 
             </div>

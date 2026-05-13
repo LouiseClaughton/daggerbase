@@ -9,7 +9,7 @@ export default function CreateCampaignForm() {
 
   return (
     <div className="flex w-full gap-8">
-      <div className="p-4 rounded-xl mb-8 w-full flex flex-col gap-4 border border-black">
+      <div className="p-4 rounded-xl sm:mb-8 w-full flex flex-col gap-4 border border-black">
         <span className="font-semibold">Start a new campaign</span>
         {state?.error && (
           <div className="text-red-600 text-sm">{state.error}</div>

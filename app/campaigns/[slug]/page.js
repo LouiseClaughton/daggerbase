@@ -75,7 +75,7 @@ export default async function CampaignPage({ params }) {
                             {campaign.Characters?.length > 0 &&
                                 <div className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4">
                                     <h2 className="text-3xl">Characters</h2>
-                                    <div className="grid grid-cols-3 gap-8">
+                                    <div className="flex flex-col sm:grid sm:grid-cols-3 gap-4 sm:gap-8">
                                         {campaign.Characters.map((character) => (
                                             <div
                                                 key={`${character.id}`}

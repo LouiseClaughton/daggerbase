@@ -43,7 +43,8 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="fixed top-4 left-6 bottom-4 w-20 z-50 bg-zinc-900 rounded-3xl flex flex-col items-center gap-1 transform transition-transform duration-300 sm:translate-x-0 -translate-x-full">
+    <div className="fixed top-4 left-4 right-4 h-20 z-50 bg-zinc-900 rounded-3xl flex items-center gap-1
+    sm:flex-col sm:left-6 sm:right-auto sm:w-20 sm:h-auto sm:bottom-4">
       {navItem("/", HomeIcon)}
       {navItem("/campaigns", BookmarkIcon)}
       {navItem("/one-shots", BookIcon)}

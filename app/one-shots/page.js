@@ -35,11 +35,11 @@ export default async function OneShots() {
                         </div>
 
                         <div>
-                            <div className="w-full">
+                            <div className="w-full mb-8 sm:mb-0">
                                 <CreateAdventureForm />
                             </div>
 
-                            <div className="grid grid-cols-3 gap-8">
+                            <div className="w-full flex flex-col sm:grid sm:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-0">
                                 {oneShots.map((item) => (
                                     <div
                                         key={`${item.type}-${item.id}`}
