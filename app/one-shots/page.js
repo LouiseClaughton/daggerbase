@@ -34,12 +34,12 @@ export default async function OneShots() {
                             <h2 className="text-5xl">One Shots</h2>
                         </div>
 
-                        <div>
+                        <div className="flex flex-col gap-8">
                             <div className="w-full mb-8 sm:mb-0">
                                 <CreateAdventureForm />
                             </div>
 
-                            <div className="w-full flex flex-col sm:grid sm:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-0">
+                            <div className="w-full flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
                                 {oneShots.map((item) => (
                                     <div
                                         key={`${item.type}-${item.id}`}
@@ -47,7 +47,7 @@ export default async function OneShots() {
                                     >
                                         <h2 className="text-3xl">{item.title}</h2>
                                         <p className="line-clamp-5 leading-6 h-[7.5rem]">{item.summary}</p>
-                                        <div className="flex w-full justify-between">
+                                        <div className="flex flex-col xl:flex-row gap-4 w-full justify-between">
                                             <div className="flex gap-2">
                                                 <Tag status={item.status} />
                                             </div>

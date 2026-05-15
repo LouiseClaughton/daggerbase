@@ -9,6 +9,11 @@ import RightArrow from "../../assets/right-arrow";
 import SessionViewer from "../../components/sessionView";
 import Tag from "../../components/tag";
 
+import PlusIcon from "../../assets/plus-icon";
+import MinusIcon from "../../assets/minus-icon";
+import CharactersCard from "../../components/charactersCard";
+import SummaryCard from "../../components/summaryCard";
+
 export default async function CampaignPage({ params }) {
     const supabase = await createClient();
 
@@ -62,42 +67,20 @@ export default async function CampaignPage({ params }) {
                             }
                         </div>
 
-                        <div className="flex gap-4 mb-8">
+                        <div className="flex flex-col sm:flex-row gap-4 mb-8">
                             <Tag type='Campaign' />
                             <Tag status={campaign.status} />
                         </div>
 
                         <div className="flex flex-col gap-8">
-                            <div className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4">
-                                <h2 className="text-3xl">Summary</h2>
-                                <div className="whitespace-pre-line">{campaign.summary}</div>
-                            </div>
+                            {campaign.summary &&
+                                <SummaryCard summary={campaign.summary} openByDefault={true} />
+                            }
                             {campaign.Characters?.length > 0 &&
-                                <div className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4">
-                                    <h2 className="text-3xl">Characters</h2>
-                                    <div className="flex flex-col sm:grid sm:grid-cols-3 gap-4 sm:gap-8">
-                                        {campaign.Characters.map((character) => (
-                                            <div
-                                                key={`${character.id}`}
-                                                className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
-                                            >
-                                                <div className="flex justify-between">
-                                                    <h2 className="text-2xl">{character.character_name} / {character.player_name}</h2>
-                                                    <Link
-                                                        href={`/characters/${character.slug}`}
-                                                        className="bg-black text-white px-2 py-2 rounded-lg w-fit justify-self-end"
-                                                    >
-                                                        <RightArrow className="w-5 h-5" />
-                                                    </Link>
-                                                </div>
-                                                <p>{character.ancestry} {character.class}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+                                <CharactersCard characters={campaign.Characters} openByDefault={false} />
                             }
                             {campaign.Sessions?.length > 0 &&
-                                <SessionViewer sessions={campaign.Sessions} />
+                                <SessionViewer sessions={campaign.Sessions} openByDefault={false} />
                             }
                         </div>
                     </div>

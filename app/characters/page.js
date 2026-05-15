@@ -2,10 +2,9 @@
 import { Suspense } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
-import CreateCampaignForm from '../components/create-campaign-form';
 import RightArrow from '../assets/right-arrow';
 import Tag from '../components/tag';
-import CreateAdventureForm from '../components/create-adventure-form';
+import CreateCharacterForm from '../components/create-character-form';
 
 export default async function Characters() {
 
@@ -44,6 +43,17 @@ export default async function Characters() {
         }))
     ]
 
+    const allCharacters = combined.flatMap(item =>
+        (item.Characters || []).map(character => ({
+            ...character,
+            source: {
+                id: item.id,
+                title: item.title,
+                type: item.type,
+            }
+        }))
+    );
+
     return (
         <div className="h-screen w-full flex">
             <div className="bg-white w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
@@ -56,28 +66,38 @@ export default async function Characters() {
                                         <h2 className="text-5xl">Characters</h2>
                                     </div>
 
-                                    <div>
-                                        {combined.Characters?.length > 0 &&
-                                            <div className="grid grid-cols-3 gap-8">
-                                                {combined.Characters.map((character) => (
-                                                    <div
-                                                        key={`${character.id}`}
-                                                        className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
-                                                    >
-                                                        <div className="flex justify-between">
-                                                            <h2 className="text-2xl">{character.character_name} / {character.player_name}</h2>
-                                                            <Link
-                                                                href={`/characters/${character.slug}`}
-                                                                className="bg-black text-white px-2 py-2 rounded-lg w-fit justify-self-end"
-                                                            >
-                                                                <RightArrow className="w-5 h-5" />
-                                                            </Link>
-                                                        </div>
-                                                        <p>{character.ancestry} {character.class}</p>
+                                    <div className="flex flex-col gap-8">
+                                        <div className="w-full mb-8 sm:mb-0">
+                                            <CreateCharacterForm />
+                                        </div>
+
+                                        <div className="w-full flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
+                                            {allCharacters.map((character) => (
+                                                <div
+                                                    key={`${character.id}`}
+                                                    className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
+                                                >
+                                                    <div className="flex justify-between">
+                                                        <h2 className="text-2xl">{character.character_name} / {character.player_name}</h2>
+                                                        <Link
+                                                            href={`/characters/${character.slug}`}
+                                                            className="bg-black text-white px-2 py-2 rounded-lg w-fit justify-self-end"
+                                                        >
+                                                            <RightArrow className="w-5 h-5" />
+                                                        </Link>
                                                     </div>
-                                                ))}
-                                            </div>
-                                        }
+                                                    <p>{character.ancestry} {character.class}</p>
+                                                    <div className="flex gap-2">
+                                                        {character.source && (
+                                                            <Tag
+                                                                text={character.source.title}
+                                                                type={character.source.type}
+                                                            />
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

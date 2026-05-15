@@ -1,20 +1,20 @@
 "use client";
 
-import { saveAdventure } from "../one-shots/actions";
+import { saveCharacter } from "../characters/actions";
 import { useActionState, useState } from "react";
 import RightArrow from "../assets/right-arrow";
 import PlusIcon from "../assets/plus-icon";
 import MinusIcon from "../assets/minus-icon";
 
-export default function CreateAdventureForm() {
-  const [state, action, isPending] = useActionState(saveAdventure, null);
+export default function CreateCharacterForm() {
+  const [state, action, isPending] = useActionState(saveCharacter, null);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex w-full gap-8">
       <div className="p-4 rounded-xl w-full flex flex-col border border-black">
         <div className="flex items-center gap-x-4">
-            <h2 className="text-3xl">Add a new adventure</h2>
+            <h2 className="text-3xl">Add a new character</h2>
     
             <button
                 type="button"
@@ -37,7 +37,7 @@ export default function CreateAdventureForm() {
               <input
                 type="text"
                 name="title"
-                placeholder="Adventure title"
+                placeholder="Character name"
                 className="border border-gray-400 p-2 rounded-xl w-full bg-white"
                 required
               />
@@ -50,7 +50,7 @@ export default function CreateAdventureForm() {
                 <RightArrow className="w-5 h-5" />
               </button>
             </form>
-          </div>
+        </div>
       </div>
     </div>
   );
