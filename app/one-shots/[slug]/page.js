@@ -61,7 +61,7 @@ export default async function OneShotPage({ params }) {
                             }
                         </div>
 
-                        <div className="flex gap-4 mb-8">
+                        <div className="flex flex-col sm:flex-row gap-4 mb-8">
                             <Tag type='One-Shot' />
                             <Tag status={oneShot.status} />
                         </div>

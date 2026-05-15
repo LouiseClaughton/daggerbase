@@ -30,7 +30,7 @@ export default function CharactersCard({ characters, openByDefault }) {
           ${isOpen ? "max-h-[2000px] opacity-100 mt-4" : "max-h-0 opacity-0"}
         `}
       >
-        <div className="flex flex-col sm:grid sm:grid-cols-3 gap-4 sm:gap-8">
+        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
           {characters?.map((character) => (
             <div
               key={character.id}

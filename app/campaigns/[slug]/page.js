@@ -67,7 +67,7 @@ export default async function CampaignPage({ params }) {
                             }
                         </div>
 
-                        <div className="flex gap-4 mb-8">
+                        <div className="flex flex-col sm:flex-row gap-4 mb-8">
                             <Tag type='Campaign' />
                             <Tag status={campaign.status} />
                         </div>

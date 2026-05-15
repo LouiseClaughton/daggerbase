@@ -54,21 +54,21 @@ export default async function Dashboard() {
                                     <h2 className="text-5xl">Dashboard</h2>
                                 </div>
 
-                                <div>
-                                    <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-8 mb-8 sm:mb-0">
+                                <div className="flex flex-col gap-8">
+                                    <div className="w-full flex flex-col gap-4 sm:gap-4">
                                         <CreateCampaignForm />
                                         <CreateAdventureForm />
                                     </div>
 
-                                    <div className="flex flex-col sm:grid sm:grid-cols-3 gap-4 sm:gap-8">
+                                    <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
                                         {combined.map((item) => (
                                             <div
                                                 key={`${item.type}-${item.id}`}
                                                 className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
                                             >
-                                                <h2 className="text-3xl">{item.title}</h2>
+                                                <h2 className="text-3xl leading-tight min-h-[2.5em] xl:min-h-0">{item.title}</h2>
                                                 <p className="line-clamp-5 leading-6 h-[7.5rem]">{item.summary}</p>
-                                                <div className="flex w-full justify-between">
+                                                <div className="flex flex-col xl:flex-row gap-4 w-full justify-between">
                                                     <div className="flex gap-2">
                                                         <Tag type={item.type} />
                                                         <Tag status={item.status} />

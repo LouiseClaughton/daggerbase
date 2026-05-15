@@ -1,4 +1,4 @@
-export default function Tag({ status, type, text }) {
+export default function Tag({ status, type, text, source }) {
     let color;
 
     if (status === 'Completed') {
@@ -13,7 +13,7 @@ export default function Tag({ status, type, text }) {
         color = '#D9EBFF';
     }
 
-    const label = text || status || type;
+    const label = text || status || type || source;
 
     return (
         <div
