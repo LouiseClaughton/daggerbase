@@ -5,13 +5,13 @@ import { useState } from "react";
 import PlusIcon from "../assets/plus-icon";
 import MinusIcon from "../assets/minus-icon";
 
-export default function SummaryCard ({ summary }) {
-    const [isOpen, setIsOpen] = useState(true);
+export default function SummaryCard ({ summary, title = "Summary", openByDefault }) {
+    const [isOpen, setIsOpen] = useState(openByDefault);
 
     return (
         <div className="w-full h-full border border-black rounded-xl flex flex-col p-4">
             <div className="flex items-center gap-x-4">
-                <h2 className="text-3xl">Summary</h2>
+                <h2 className="text-3xl">{title}</h2>
         
                 <button
                     type="button"

@@ -74,7 +74,10 @@ export default async function CampaignPage({ params }) {
 
                         <div className="flex flex-col gap-8">
                             {campaign.summary &&
-                                <SummaryCard summary={campaign.summary} openByDefault={true} />
+                                <SummaryCard summary={campaign.summary} title="Summary" openByDefault={true} />
+                            }
+                            {campaign.overview &&
+                                <SummaryCard summary={campaign.overview} title="Overview" />
                             }
                             {campaign.Characters?.length > 0 &&
                                 <CharactersCard characters={campaign.Characters} openByDefault={false} />

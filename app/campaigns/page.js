@@ -46,6 +46,11 @@ export default async function Campaigns() {
                                         key={`${item.type}-${item.id}`}
                                         className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
                                     >
+                                        {item.image_url &&
+                                            <div className="h-16 w-16 pt-2 pb-2 flex items-center">
+                                                <img src={item.image_url} />
+                                            </div>
+                                        }
                                         <h2 className="text-3xl">{item.title}</h2>
                                         <p className="line-clamp-5 leading-6 h-[7.5rem]">{item.summary}</p>
                                         <div className="flex flex-col xl:flex-row gap-4 w-full justify-between">

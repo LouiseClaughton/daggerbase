@@ -68,7 +68,10 @@ export default async function OneShotPage({ params }) {
 
                         <div className="flex flex-col gap-8">
                             {oneShot.summary &&
-                                <SummaryCard summary={oneShot.summary} openByDefault={true} />
+                                <SummaryCard summary={oneShot.summary} title="Summary" openByDefault={true} />
+                            }
+                            {oneShot.overview &&
+                                <SummaryCard summary={oneShot.overview} title="Overview" openByDefault={true} />
                             }
                             {oneShot.Characters?.length > 0 &&
                                 <CharactersCard characters={oneShot.Characters} openByDefault={false} />

@@ -77,6 +77,11 @@ export default async function Characters() {
                                                     key={`${character.id}`}
                                                     className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
                                                 >
+                                                    {character.image_url &&
+                                                        <div className="h-16 w-16 pt-2 pb-2 flex items-center">
+                                                            <img src={character.image_url} />
+                                                        </div>
+                                                    }
                                                     <div className="flex justify-between">
                                                         <h2 className="text-2xl">{character.character_name} / {character.player_name}</h2>
                                                         <Link
