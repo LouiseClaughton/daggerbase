@@ -76,11 +76,9 @@ export default async function Characters() {
                                     </div>
 
                                     <div className="flex flex-col gap-8">
-                                        <div className="w-full">
-                                            {signedIn &&
-                                                <CreateCharacterForm campaigns={campaignList || []} />
-                                            }
-                                        </div>
+                                        {signedIn &&
+                                            <CreateCharacterForm campaigns={campaignList || []} />
+                                        }
 
                                         <div className="w-full flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
                                             {allCharacters.map((character) => (
