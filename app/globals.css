@@ -93,3 +93,8 @@ body {
     #7DB876
   );
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0);
+}

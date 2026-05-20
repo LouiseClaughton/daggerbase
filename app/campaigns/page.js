@@ -7,6 +7,8 @@ import Tag from '../components/tag';
 
 export default async function Campaigns() {
     const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+    const signedIn = Boolean(session?.user)
 
     const { data: campaigns, error } = await supabase
         .from("Campaigns")
@@ -36,8 +38,10 @@ export default async function Campaigns() {
                         </div>
 
                         <div className="flex flex-col gap-8">
-                            <div className="w-full mb-8 sm:mb-0">
-                                <CreateCampaignForm />
+                            <div className="w-full">
+                                {signedIn &&
+                                    <CreateCampaignForm />
+                                }
                             </div>
 
                             <div className="w-full flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
@@ -53,7 +57,7 @@ export default async function Campaigns() {
                                         }
                                         <h2 className="text-3xl">{item.title}</h2>
                                         <p className="line-clamp-5 leading-6 h-[7.5rem]">{item.summary}</p>
-                                        <div className="flex flex-col xl:flex-row gap-4 w-full justify-between">
+                                        <div className="flex flex-row gap-4 w-full justify-between">
                                             <div className="flex gap-2">
                                                 <Tag status={item.status} />
                                             </div>

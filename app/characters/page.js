@@ -9,9 +9,12 @@ import CreateCharacterForm from '../components/create-character-form';
 export default async function Characters() {
 
     const supabase = await createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    const signedIn = Boolean(session?.user);
     const [
         { data: campaigns, error: campaignsError },
-        { data: oneShots, error: oneShotsError }
+        { data: oneShots, error: oneShotsError },
+        { data: campaignList, error: campaignListError }
     ] = await Promise.all([
         supabase
                 .from("Campaigns")
@@ -25,11 +28,17 @@ export default async function Characters() {
                 .select(`
                     *,
                     Characters (*)
-                `)
+                `),
+
+        supabase
+                .from("Campaigns")
+                .select(`id,title`)
+                .order('title', { ascending: true })
         ])
 
         if (campaignsError) throw campaignsError
         if (oneShotsError) throw oneShotsError
+        if (campaignListError) throw campaignListError
 
         const combined = [
         ...(campaigns || []).map(campaign => ({
@@ -67,8 +76,10 @@ export default async function Characters() {
                                     </div>
 
                                     <div className="flex flex-col gap-8">
-                                        <div className="w-full mb-8 sm:mb-0">
-                                            <CreateCharacterForm />
+                                        <div className="w-full">
+                                            {signedIn &&
+                                                <CreateCharacterForm campaigns={campaignList || []} />
+                                            }
                                         </div>
 
                                         <div className="w-full flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
@@ -82,23 +93,21 @@ export default async function Characters() {
                                                             <img src={character.image_url} />
                                                         </div>
                                                     }
-                                                    <div className="flex justify-between">
-                                                        <h2 className="text-2xl">{character.character_name} / {character.player_name}</h2>
-                                                        <Link
-                                                            href={`/characters/${character.slug}`}
-                                                            className="bg-black text-white px-2 py-2 rounded-lg w-fit justify-self-end"
-                                                        >
-                                                            <RightArrow className="w-5 h-5" />
-                                                        </Link>
-                                                    </div>
+                                                    <h2 className="text-2xl">{character.character_name} / {character.player_name}</h2>
                                                     <p>{character.ancestry} {character.class}</p>
-                                                    <div className="flex gap-2">
+                                                    <div className="flex gap-2 justify-between items-center">
                                                         {character.source && (
                                                             <Tag
                                                                 text={character.source.title}
                                                                 type={character.source.type}
                                                             />
                                                         )}
+                                                        <Link
+                                                            href={`/characters/${character.slug}`}
+                                                            className="bg-black text-white px-2 py-2 rounded-lg w-fit justify-self-end h-fit"
+                                                        >
+                                                            <RightArrow className="w-5 h-5" />
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             ))}

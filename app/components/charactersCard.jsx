@@ -1,14 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 
 import RightArrow from "../assets/right-arrow";
 import PlusIcon from "../assets/plus-icon";
 import MinusIcon from "../assets/minus-icon";
 
-export default function CharactersCard({ characters, openByDefault }) {
+export default function CharactersCard({characters, openByDefault}) {
   const [isOpen, setIsOpen] = useState(openByDefault);
+
+  const contentRef = useRef(null);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setHeight(contentRef.current.scrollHeight);
+    }
+  }, [characters, isOpen]);
 
   return (
     <div className="w-full h-full border border-black rounded-xl flex flex-col p-4">
@@ -25,12 +34,15 @@ export default function CharactersCard({ characters, openByDefault }) {
       </div>
 
       <div
-        className={`
-          overflow-hidden transition-all duration-300 ease-in-out
-          ${isOpen ? "max-h-[2000px] opacity-100 mt-4" : "max-h-0 opacity-0"}
-        `}
+        style={{
+          maxHeight: isOpen ? `${height}px` : "0px",
+        }}
+        className="overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out opacity-100"
       >
-        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
+        <div
+          ref={contentRef}
+          className="pt-4 flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8"
+        >
           {characters?.map((character) => (
             <div
               key={character.id}

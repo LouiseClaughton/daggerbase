@@ -14,19 +14,38 @@ function slugify(text) {
 
 export async function saveCharacter(prevState, formData) {
     const supabase = await createClient();
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError) {
+        return { error: sessionError.message };
+    }
+
+    if (!session?.user) {
+        return { error: 'Authentication required to save characters.' };
+    }
 
     const id = formData.get('id');
 
-    const title = formData.get('title');
+    const character_name = formData.get('character_name');
+    const player_name = formData.get('player_name');
+    const ancestry = formData.get('ancestry');
+    const character_class = formData.get('class');
+    const backstory = formData.get('backstory');
+    const campaignValue = formData.get('campaign');
     let slug = formData.get('slug');
 
     // Auto-generate slug if creating
-    if (!slug && title) {
-        slug = slugify(title)
+    if (!slug && character_name) {
+        slug = slugify(character_name)
     }
 
     const payload = {
-        title,
+        character_name,
+        player_name,
+        ancestry,
+        class: character_class,
+        backstory,
+        campaign: campaignValue ? Number(campaignValue) : null,
         slug
     }
 
@@ -49,7 +68,7 @@ export async function saveCharacter(prevState, formData) {
     }
 
     // CREATE
-    const { createData, createError } = await supabase
+    const { data: createData, error: createError } = await supabase
         .from('Characters')
         .insert([payload])
         .select()
@@ -60,10 +79,19 @@ export async function saveCharacter(prevState, formData) {
     }
 
     redirect(`/characters/${slug}`)
-}
+} 
 
 export async function deleteCharacter(formData) {
     const supabase = await createClient()
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError) {
+        return { error: sessionError.message };
+    }
+
+    if (!session?.user) {
+        return { error: 'Authentication required to delete characters.' };
+    }
 
     const id = formData.get('id');
     let slug = formData.get('slug')
@@ -71,7 +99,7 @@ export async function deleteCharacter(formData) {
      // DELETE
 
     if (id) {
-        const { deleteData, deleteError } = await supabase
+        const { data: deleteData, error: deleteError } = await supabase
             .from('Characters')
             .delete()
             .eq('id', id)

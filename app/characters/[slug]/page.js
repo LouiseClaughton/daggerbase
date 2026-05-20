@@ -1,17 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { createClient } from "@/lib/supabase/server";
-import CampaignSummary from "../../components/campaignSummary";
-import Link from "next/link";
-import Card from "../../components/card";
-import EditCampaignForm from "../../components/campaign-settings";
-import RightArrow from "../../assets/right-arrow";
-import SessionViewer from "../../components/sessionView";
 import Tag from "../../components/tag";
-
-import PlusIcon from "../../assets/plus-icon";
-import MinusIcon from "../../assets/minus-icon";
-import CharactersCard from "../../components/charactersCard";
 import SummaryCard from "../../components/summaryCard";
 
 export default async function CharacterPage({ params }) {
@@ -19,56 +9,47 @@ export default async function CharacterPage({ params }) {
 
     const { slug } = await params;
 
-    const [
-        { data: campaign, error: campaignError },
-        { data: oneShot, error: oneShotError }
-    ] = await Promise.all([
-        supabase
-            .from("Campaigns")
-            .select(`
-                *,
-                Characters!inner (*)
-            `)
-            .eq("Characters.slug", slug),
+    const { data: character, error: characterError } = await supabase
+        .from("Characters")
+        .select("*")
+        .eq("slug", slug)
+        .single();
 
-        supabase
-            .from("One-Shots")
-            .select(`
-                *,
-                Characters!inner (*)
-            `)
-            .eq("Characters.slug", slug)
-    ]);
-
-    const combined = [
-        ...(campaign?.length ? [{
-            ...campaign[0],
-            type: "Campaign"
-        }] : []),
-
-        ...(oneShot?.length ? [{
-            ...oneShot[0],
-            type: "One-Shot"
-        }] : [])
-    ];
-
-    const allCharacters = combined.flatMap(item =>
-        (item.Characters || []).map(character => ({
-            ...character,
-            source: {
-                id: item.id,
-                title: item.title,
-                type: item.type,
-            }
-        }))
-    );
-
-    const character = allCharacters.find(
-        character => character.slug === slug
-    );
-
-    if (!character) {
+    if (characterError || !character) {
         return <div>Character not found</div>;
+    }
+
+    let source = null;
+
+    if (character.campaign) {
+        const { data: campaign } = await supabase
+            .from("Campaigns")
+            .select("id,title")
+            .eq("id", character.campaign)
+            .single();
+
+        if (campaign) {
+            source = {
+                id: campaign.id,
+                title: campaign.title,
+                type: "Campaign"
+            };
+        }
+    } else if (character.one_shot_id || character.oneShot_id) {
+        const oneShotId = character.one_shot_id || character.oneShot_id;
+        const { data: oneShot } = await supabase
+            .from("One-Shots")
+            .select("id,title")
+            .eq("id", oneShotId)
+            .single();
+
+        if (oneShot) {
+            source = {
+                id: oneShot.id,
+                title: oneShot.title,
+                type: "One-Shot"
+            };
+        }
     }
 
     return (
@@ -84,9 +65,15 @@ export default async function CharacterPage({ params }) {
                             {character.ancestry} {character.class}
                         </div>
 
-                        <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                            <Tag type={character.source.type} />
-                            <Tag source={character.source.title} />
+                        <div className="flex flex-row gap-4 mb-8">
+                            {source ? (
+                                <>
+                                    <Tag type={source.type} />
+                                    <Tag source={source.title} />
+                                </>
+                            ) : (
+                                <Tag text="Unlinked character" />
+                            )}
                         </div>
 
                         <div className="flex flex-col gap-8">

@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import PlusIcon from "../assets/plus-icon";
 import MinusIcon from "../assets/minus-icon";
 
 export default function SummaryCard ({ summary, title = "Summary", openByDefault }) {
     const [isOpen, setIsOpen] = useState(openByDefault);
+
+    const contentRef = useRef(null);
+    const [height, setHeight] = useState(0);
+
+    useEffect(() => {
+        if (contentRef.current) {
+          setHeight(contentRef.current.scrollHeight);
+        }
+      }, [summary, isOpen]);
 
     return (
         <div className="w-full h-full border border-black rounded-xl flex flex-col p-4">
@@ -23,12 +32,12 @@ export default function SummaryCard ({ summary, title = "Summary", openByDefault
             </div>
         
             <div
-                className={`
-                    overflow-hidden transition-all duration-300 ease-in-out
-                    ${isOpen ? "max-h-[2000px] opacity-100 mt-4" : "max-h-0 opacity-0"}
-                `}
-                >
-                <div className="whitespace-pre-line">{summary}</div>
+                style={{
+                    maxHeight: isOpen ? `${height}px` : "0px",
+                }}
+                className="overflow-hidden transition-all duration-300 ease-in-out"
+            >
+                <div ref={contentRef} className="whitespace-pre-line">{summary}</div>
             </div>
         </div>
     )

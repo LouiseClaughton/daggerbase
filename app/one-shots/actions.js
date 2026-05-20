@@ -14,11 +14,21 @@ function slugify(text) {
 
 export async function saveAdventure(prevState, formData) {
     const supabase = await createClient();
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError) {
+        return { error: sessionError.message };
+    }
+
+    if (!session?.user) {
+        return { error: 'Authentication required to save adventures.' };
+    }
 
     const id = formData.get('id');
 
     const title = formData.get('title');
     const summary = formData.get('summary');
+    const overview = formData.get('overview');
     const start_date = formData.get('start_date');
     const end_date = formData.get('end_date');
 
@@ -33,6 +43,7 @@ export async function saveAdventure(prevState, formData) {
         title,
         slug,
         summary,
+        overview,
         start_date: start_date || null,
         end_date: end_date || null,
         status: formData.get('status') || 'Upcoming'
@@ -72,6 +83,15 @@ export async function saveAdventure(prevState, formData) {
 
 export async function deleteAdventure(formData) {
     const supabase = await createClient()
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError) {
+        return { error: sessionError.message };
+    }
+
+    if (!session?.user) {
+        return { error: 'Authentication required to delete adventures.' };
+    }
 
     const id = formData.get('id');
     let slug = formData.get('slug')

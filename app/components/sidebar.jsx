@@ -9,6 +9,7 @@ import HomeIcon from "../assets/home-icon";
 import BookmarkIcon from "../assets/bookmark-icon";
 import BookIcon from "../assets/book-icon";
 import UserIcon from "../assets/user-icon";
+import AccountIcon from "../assets/account-icon";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -44,11 +45,16 @@ export default function Sidebar() {
 
   return (
     <div className="fixed top-4 left-4 right-4 h-20 z-50 bg-zinc-900 rounded-3xl flex items-center gap-1 justify-center
-    sm:flex-col sm:left-6 sm:right-auto sm:w-20 sm:h-auto sm:bottom-4 sm:justify-normal">
-      {navItem("/", HomeIcon)}
-      {navItem("/campaigns", BookmarkIcon)}
-      {navItem("/one-shots", BookIcon)}
-      {navItem("/characters", UserIcon)}
+    sm:flex-col sm:left-6 sm:right-auto sm:w-20 sm:h-auto sm:bottom-4 sm:justify-between">
+      <div className="flex lg:flex-col">
+        {navItem("/", HomeIcon)}
+        {navItem("/campaigns", BookmarkIcon)}
+        {navItem("/one-shots", BookIcon)}
+        {navItem("/characters", UserIcon)}
+      </div>
+      <div>
+        {navItem("/auth", AccountIcon)}
+      </div>
     </div>
   );
 }
