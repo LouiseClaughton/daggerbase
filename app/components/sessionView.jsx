@@ -18,14 +18,14 @@ export default function SessionViewer({ sessions, openByDefault }) {
     const [height, setHeight] = useState(0);
 
     useEffect(() => {
-    if (contentRef.current) {
-      setHeight(contentRef.current.scrollHeight);
-    }
-  }, [sessions, isOpen]);
+        if (contentRef.current) {
+            setHeight(contentRef.current.scrollHeight);
+        }
+    }, [sessions, isOpen]);
 
     return (
-        <div className="w-full border border-black rounded-xl p-4">
-            <div className="flex items-center gap-x-4">
+        <div className={`w-full border border-black rounded-xl p-4 ${isOpen ? "pb-12" : "pb-0"}`}>
+            <div className="flex items-center gap-x-4 mb-4">
                 <h2 className="text-3xl">Sessions</h2>
         
                 <button

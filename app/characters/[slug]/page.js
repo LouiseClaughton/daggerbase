@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import { createClient } from "@/lib/supabase/server";
 import Tag from "../../components/tag";
 import SummaryCard from "../../components/summaryCard";
+import GlobalSearch from "../../components/searchbar";
 
 export default async function CharacterPage({ params }) {
     const supabase = await createClient();
@@ -24,7 +25,7 @@ export default async function CharacterPage({ params }) {
     if (character.campaign) {
         const { data: campaign } = await supabase
             .from("Campaigns")
-            .select("id,title")
+            .select("id,title,slug")
             .eq("id", character.campaign)
             .single();
 
@@ -32,14 +33,15 @@ export default async function CharacterPage({ params }) {
             source = {
                 id: campaign.id,
                 title: campaign.title,
-                type: "Campaign"
+                type: "Campaign",
+                link: campaign.slug
             };
         }
-    } else if (character.one_shot_id || character.oneShot_id) {
-        const oneShotId = character.one_shot_id || character.oneShot_id;
+    } else if (character.one_shot || character.oneShot) {
+        const oneShotId = character.one_shot || character.oneShot;
         const { data: oneShot } = await supabase
             .from("One-Shots")
-            .select("id,title")
+            .select("id,title,slug")
             .eq("id", oneShotId)
             .single();
 
@@ -47,7 +49,8 @@ export default async function CharacterPage({ params }) {
             source = {
                 id: oneShot.id,
                 title: oneShot.title,
-                type: "One-Shot"
+                type: "One-Shot",
+                link: oneShot.slug
             };
         }
     }
@@ -57,19 +60,24 @@ export default async function CharacterPage({ params }) {
             <div className="bg-white text-black w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
                 <div className="flex flex-col">
                     <div className="p-8 sm:p-16 relative sm:ml-20">
-                        <div className="flex justify-between items-center mb-4">
-                            <h1 className="text-5xl">{character.character_name}</h1>
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
+                            <h1 className="text-5xl mb-4 md:mb-0">{character.character_name}</h1>
+                            <GlobalSearch />
                         </div>
 
                         <div className="mb-4">
                             {character.ancestry} {character.class}
                         </div>
 
+                        <div className="mb-4">
+                            Played by: {character.player_name}
+                        </div>
+
                         <div className="flex flex-row gap-4 mb-8">
                             {source ? (
                                 <>
                                     <Tag type={source.type} />
-                                    <Tag source={source.title} />
+                                    <Tag source={source.title} link={source.link} sourceType={source.type} />
                                 </>
                             ) : (
                                 <Tag text="Unlinked character" />

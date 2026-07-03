@@ -2,10 +2,9 @@
 import { Suspense } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
-import CreateCampaignForm from '../app/components/create-campaign-form';
 import RightArrow from '../app/assets/right-arrow';
 import Tag from '../app/components/tag';
-import CreateAdventureForm from '../app/components/create-adventure-form';
+import GlobalSearch from '../app/components/searchbar';
 
 export default async function Dashboard() {
 
@@ -52,37 +51,41 @@ export default async function Dashboard() {
                     <div className="bg-white text-black w-full sm:w-[9/12] h-full">
                         <div className="flex flex-col">
                             <div className="p-8 sm:p-16 relative sm:ml-20">
-                                <div className="flex justify-between items-center mb-8">
-                                    <h2 className="text-5xl">Dashboard</h2>
+                                <div className="flex flex-col md:flex-row justify-between md:items-center mb-8">
+                                    <h2 className="text-5xl mb-4 md:mb-0">Dashboard</h2>
+                                    <GlobalSearch />
                                 </div>
 
                                 <div className="flex flex-col gap-8">
                                     <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
                                         {combined.map((item) => (
-                                            <div
+                                            <Link 
+                                                href={`/${typeToLower(item.type)}s/${item.slug}`}
                                                 key={`${item.type}-${item.id}`}
-                                                className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
                                             >
-                                                {item.image_url &&
-                                                    <div className="h-16 w-16 pt-2 pb-2 flex items-center">
-                                                        <img src={item.image_url} />
+                                                <div
+                                                    className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
+                                                >
+                                                    {item.image_url &&
+                                                        <div className="h-16 w-16 pt-2 pb-2 flex items-center">
+                                                            <img src={item.image_url} />
+                                                        </div>
+                                                    }
+                                                    <h2 className="text-3xl leading-tight min-h-[2.5em] xl:min-h-0">{item.title}</h2>
+                                                    <p className="line-clamp-5 leading-6 h-[7.5rem]">{item.summary}</p>
+                                                    <div className="flex flex-row gap-4 w-full justify-between">
+                                                        <div className="flex gap-2">
+                                                            <Tag type={item.type} />
+                                                            <Tag status={item.status} />
+                                                        </div>
+                                                        <div
+                                                            className="bg-black text-white px-3 py-3 rounded-xl w-fit justify-self-end"
+                                                        >
+                                                            <RightArrow className="w-5 h-5" />
+                                                        </div>
                                                     </div>
-                                                }
-                                                <h2 className="text-3xl leading-tight min-h-[2.5em] xl:min-h-0">{item.title}</h2>
-                                                <p className="line-clamp-5 leading-6 h-[7.5rem]">{item.summary}</p>
-                                                <div className="flex flex-row gap-4 w-full justify-between">
-                                                    <div className="flex gap-2">
-                                                        <Tag type={item.type} />
-                                                        <Tag status={item.status} />
-                                                    </div>
-                                                    <Link
-                                                        href={`/${typeToLower(item.type)}s/${item.slug}`}
-                                                        className="bg-black text-white px-3 py-3 rounded-xl w-fit justify-self-end"
-                                                    >
-                                                        <RightArrow className="w-5 h-5" />
-                                                    </Link>
                                                 </div>
-                                            </div>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>

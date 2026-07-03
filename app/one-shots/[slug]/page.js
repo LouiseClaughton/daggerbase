@@ -8,6 +8,7 @@ import Tag from "../../components/tag";
 
 import SummaryCard from "../../components/summaryCard";
 import CharactersCard from "../../components/charactersCard";
+import GlobalSearch from "../../components/searchbar";
 
 export default async function OneShotPage({ params }) {
     const supabase = await createClient();
@@ -43,8 +44,9 @@ export default async function OneShotPage({ params }) {
             <div className="bg-white text-black w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
                 <div className="flex flex-col">
                     <div className="p-8 sm:p-16 relative sm:ml-20">
-                        <div className="flex justify-between items-center mb-4">
-                            <h1 className="text-5xl">{oneShot.title}</h1>
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
+                            <h1 className="text-5xl mb-4 md:mb-0">{oneShot.title}</h1>
+                            <GlobalSearch />
                         </div>
 
                         <div className="mb-4">
@@ -58,6 +60,12 @@ export default async function OneShotPage({ params }) {
 
                             {oneShot.start_date && !oneShot.end_date && oneShot.status == 'Upcoming' &&
                                 <p>{formatDateAsYear(oneShot.start_date)}</p>
+                            }
+                        </div>
+
+                        <div className="mb-4">
+                            {oneShot.game_master &&
+                                <p>Game Master: {oneShot.game_master}</p>
                             }
                         </div>
 

@@ -5,8 +5,11 @@ import Link from 'next/link';
 import RightArrow from '../assets/right-arrow';
 import Tag from '../components/tag';
 import CreateCharacterForm from '../components/create-character-form';
+import GlobalSearch from '../components/searchbar';
 
-export default async function Characters() {
+export default async function Characters({ searchParams }) {
+    const params = await searchParams;
+    const selectedSource = params?.source || "all";
 
     const supabase = await createClient();
     const { data: { session } } = await supabase.auth.getSession();
@@ -32,7 +35,7 @@ export default async function Characters() {
 
         supabase
                 .from("Campaigns")
-                .select(`id,title`)
+                .select(`id,title,slug`)
                 .order('title', { ascending: true })
         ])
 
@@ -59,9 +62,40 @@ export default async function Characters() {
                 id: item.id,
                 title: item.title,
                 type: item.type,
+                link: item.slug
             }
         }))
     );
+
+    const sourceList = [
+        ...(campaigns || []).map(campaign => ({
+            id: campaign.id,
+            title: campaign.title,
+            type: "Campaign",
+            link: campaign.slug
+        })),
+        ...(oneShots || []).map(oneShot => ({
+            id: oneShot.id,
+            title: oneShot.title,
+            type: "One-Shot",
+            link: oneShot.slug
+        })),
+    ];
+
+    const sourceCounts = allCharacters.reduce((acc, character) => {
+        const key = character.source?.title;
+        if (!key) return acc;
+
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+    }, {});
+
+    const filteredCharacters =
+    selectedSource === "all"
+        ? allCharacters
+        : allCharacters.filter(
+            (character) => character.source?.title === selectedSource
+        );
 
     return (
         <div className="h-screen w-full flex">
@@ -71,8 +105,39 @@ export default async function Characters() {
                         <div className="bg-white text-black w-full sm:w-[9/12] h-full">
                             <div className="flex flex-col">
                                 <div className="p-8 sm:p-16 relative sm:ml-20">
-                                    <div className="flex justify-between items-center mb-8">
-                                        <h2 className="text-5xl">Characters</h2>
+                                    <div className="flex flex-col md:flex-row justify-between md:items-center mb-8">
+                                        <h2 className="text-5xl mb-4 md:mb-0">Characters</h2>
+                                        <GlobalSearch />
+                                    </div>
+
+                                    {/* Filter */}
+                                    <div className="flex gap-2 flex-wrap mb-6">
+                                        <Link
+                                            href="/characters?source=all"
+                                            className={`px-3 py-1 border rounded transition ${
+                                                selectedSource === "all"
+                                                    ? "bg-black text-white"
+                                                    : "bg-white text-black"
+                                            }`}
+                                        >
+                                            All ({allCharacters.length})
+                                        </Link>
+
+                                        {sourceList
+                                            ?.filter((source) => sourceCounts[source.title])
+                                            .map((source) => (
+                                                <Link
+                                                    key={`${source.type}-${source.id}`}
+                                                    href={`/characters?source=${encodeURIComponent(source.title)}`}
+                                                    className={`px-3 py-1 border rounded transition ${
+                                                        selectedSource === source.title
+                                                            ? "bg-black text-white"
+                                                            : "bg-white text-black"
+                                                    }`}
+                                                >
+                                                    {source.title} ({sourceCounts[source.title] || 0})
+                                                </Link>
+                                            ))}
                                     </div>
 
                                     <div className="flex flex-col gap-8">
@@ -81,7 +146,7 @@ export default async function Characters() {
                                         }
 
                                         <div className="w-full flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8">
-                                            {allCharacters.map((character) => (
+                                            {filteredCharacters.map((character) => (
                                                 <div
                                                     key={`${character.id}`}
                                                     className="w-full h-full border border black rounded-xl flex flex-col gap-4 p-4"
@@ -98,6 +163,8 @@ export default async function Characters() {
                                                             <Tag
                                                                 text={character.source.title}
                                                                 type={character.source.type}
+                                                                link={character.source.link}
+                                                                sourceType={character.source.type}
                                                             />
                                                         )}
                                                         <Link

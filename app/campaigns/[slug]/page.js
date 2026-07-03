@@ -13,6 +13,7 @@ import PlusIcon from "../../assets/plus-icon";
 import MinusIcon from "../../assets/minus-icon";
 import CharactersCard from "../../components/charactersCard";
 import SummaryCard from "../../components/summaryCard";
+import GlobalSearch from "../../components/searchbar";
 
 export default async function CampaignPage({ params }) {
     const supabase = await createClient();
@@ -49,8 +50,9 @@ export default async function CampaignPage({ params }) {
             <div className="bg-white text-black w-full sm:w-[9/12] h-full pt-28 sm:pt-0">
                 <div className="flex flex-col">
                     <div className="p-8 sm:p-16 relative sm:ml-20">
-                        <div className="flex justify-between items-center mb-4">
-                            <h1 className="text-5xl">{campaign.title}</h1>
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
+                            <h1 className="text-5xl mb-4 md:mb-0">{campaign.title}</h1>
+                            <GlobalSearch />
                         </div>
 
                         <div className="mb-4">
@@ -64,6 +66,12 @@ export default async function CampaignPage({ params }) {
 
                             {campaign.start_date && !campaign.end_date && campaign.status == 'Upcoming' &&
                                 <p>{formatDateAsYear(campaign.start_date)}</p>
+                            }
+                        </div>
+
+                        <div className="mb-4">
+                            {campaign.game_master &&
+                                <p>Game Master: {campaign.game_master}</p>
                             }
                         </div>
 
